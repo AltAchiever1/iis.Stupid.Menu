@@ -35,6 +35,7 @@ namespace iiMenu.Classes.Menu
         Important,
         Safety,
         Movement,
+        Rig,
         Advantage,
         Visual,
         Fun,

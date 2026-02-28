@@ -53,7 +53,7 @@ namespace iiMenu.Patches.Menu
                             rotation = Quaternion.Euler(0f, GorillaTagger.Instance.headCollider.transform.rotation.eulerAngles.y + 180f, 0f);
                             break;
                         case 3:
-                            rotation = Quaternion.Euler(0f, Movement.recBodyRotary.transform.rotation.eulerAngles.y, 0f);
+                            rotation = Quaternion.Euler(0f, Rig.recBodyRotary.transform.rotation.eulerAngles.y, 0f);
                             break;
                     }
 

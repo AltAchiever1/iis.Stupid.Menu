@@ -1054,7 +1054,7 @@ namespace iiMenu.Mods
                 }
             }
         }
-
+        //These Anti mod checkers bro :sob:
         private static float customPropertyDelay;
         public static void BypassModCheckersGun()
         {
@@ -1259,6 +1259,7 @@ namespace iiMenu.Mods
                 }
             }
         }
+        //Fix: dont try to change EVERYONES PROPS js do localplayer 
 
         public static void GamemodeIncludeGun()
         {

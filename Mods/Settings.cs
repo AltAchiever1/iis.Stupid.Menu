@@ -440,22 +440,22 @@ namespace iiMenu.Mods
                 new ButtonInfo {
                     buttonText = "Copy Movement",
                     overlapText = $"Copy Movement {targetName}",
-                    method =() => Movement.CopyMovementPlayer(player),
-                    disableMethod = Movement.EnableRig,
+                    method =() => Rig.CopyMovementPlayer(player),
+                    disableMethod = Rig.EnableRig,
                     toolTip = $"Copies the movement of {targetName}."
                 },
                 new ButtonInfo {
                     buttonText = "Follow Player",
                     overlapText = $"Follow {targetName}",
-                    method =() => Movement.FollowPlayer(player),
-                    disableMethod = Movement.EnableRig,
+                    method =() => Rig.FollowPlayer(player),
+                    disableMethod = Rig.EnableRig,
                     toolTip = $"Follows {targetName}."
                 },
                 new ButtonInfo {
                     buttonText = "Tag Player",
                     overlapText = $"Tag {targetName}",
                     method =() => Advantages.TagPlayer(player),
-                    disableMethod = Movement.EnableRig,
+                    disableMethod = Rig.EnableRig,
                     toolTip = $"Tags {targetName}."
                 },
                 new ButtonInfo {
