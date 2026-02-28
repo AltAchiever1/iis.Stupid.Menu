@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ii's Stupid Menu  Mods/Visuals.cs
  * A mod menu for Gorilla Tag with over 1000+ mods
  *
@@ -649,6 +649,9 @@ namespace iiMenu.Mods
 
             if (Vector3.Distance(GorillaTagger.Instance.bodyCollider.transform.position, position) > 20f)
                 return;
+
+            if (handTaps.TryGetValue(rig, out object[] existing) && existing[3] is GameObject oldObj)
+                Object.Destroy(oldObj);
 
             handTaps[rig] = new object[]
             {
@@ -5526,6 +5529,153 @@ namespace iiMenu.Mods
                     other.Invoke();
                     break;
             }
+        }
+
+        public static int espMode;
+
+        public static void ChangeESPType(bool positive = true)
+        {
+            string[] espNames = {
+                "Tracers",
+                "Box",
+                "Hollow Box",
+                "Breadcrumbs",
+                "Bone",
+                "Skeleton",
+                "Wireframe",
+                "Chams",
+                "Beacons",
+                "Distance"
+            };
+
+            if (positive)
+                espMode++;
+            else
+                espMode--;
+
+            espMode %= espNames.Length;
+            if (espMode < 0)
+                espMode = espNames.Length - 1;
+
+            string label = "ESP <color=grey>[</color><color=green>" + espNames[espMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("ESP").overlapText = label;
+            Buttons.GetIndex("Change ESP Type").overlapText = "Change ESP Type <color=grey>[</color><color=green>" + espNames[espMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void ESPMod()
+        {
+            switch (espMode)
+            {
+                case 0: AutomaticESP(InfectionTracers, HuntTracers, CasualTracers); break;
+                case 1: AutomaticESP(InfectionBoxESP, HuntBoxESP, CasualBoxESP); break;
+                case 2: AutomaticESP(HollowInfectionBoxESP, HollowHuntBoxESP, CasualHollowBoxESP); break;
+                case 3: AutomaticESP(InfectionBreadcrumbs, HuntBreadcrumbs, CasualBreadcrumbs); break;
+                case 4: AutomaticESP(InfectionBoneESP, HuntBoneESP, CasualBoneESP); break;
+                case 5: AutomaticESP(InfectionSkeletonESP, HuntSkeletonESP, CasualSkeletonESP); break;
+                case 6: AutomaticESP(InfectionWireframeESP, HuntWireframeESP, CasualWireframeESP); break;
+                case 7: AutomaticESP(InfectionChams, HuntChams, CasualChams); break;
+                case 8: AutomaticESP(InfectionBeacons, HuntBeacons, CasualBeacons); break;
+                case 9: AutomaticESP(InfectionDistanceESP, HuntDistanceESP, CasualDistanceESP); break;
+            }
+        }
+
+        public static void DisableESPMod()
+        {
+            isLineRenderQueued = true;
+            isNameTagQueued = true;
+            DisableBoxESP();
+            DisableHollowBoxESP();
+            DisableBreadcrumbs();
+            DisableBoneESP();
+            DisableSkeletonESP();
+            DisableWireframeESP();
+            DisableChams();
+        }
+
+        public static int timeOfDayMode;
+
+        public static void ChangeTimeOfDay(bool positive = true)
+        {
+            string[] timeNames = {
+                "Morning",
+                "Day",
+                "Evening",
+                "Night"
+            };
+
+            if (positive)
+                timeOfDayMode++;
+            else
+                timeOfDayMode--;
+
+            timeOfDayMode %= timeNames.Length;
+            if (timeOfDayMode < 0)
+                timeOfDayMode = timeNames.Length - 1;
+
+            string label = "Time of Day <color=grey>[</color><color=green>" + timeNames[timeOfDayMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Time of Day").overlapText = label;
+            Buttons.GetIndex("Change Time of Day").overlapText = "Change Time of Day <color=grey>[</color><color=green>" + timeNames[timeOfDayMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void TimeOfDayMod()
+        {
+            switch (timeOfDayMode)
+            {
+                case 0: BetterDayNightManager.instance.SetTimeOfDay(1); break;
+                case 1: BetterDayNightManager.instance.SetTimeOfDay(3); break;
+                case 2: BetterDayNightManager.instance.SetTimeOfDay(7); break;
+                case 3: BetterDayNightManager.instance.SetTimeOfDay(0); break;
+            }
+        }
+
+        public static int voiceIndicatorMode;
+
+        public static void ChangeVoiceIndicatorMode(bool positive = true)
+        {
+            string[] modeNames = { "Indicators", "ESP" };
+
+            if (positive)
+                voiceIndicatorMode++;
+            else
+                voiceIndicatorMode--;
+
+            voiceIndicatorMode %= modeNames.Length;
+            if (voiceIndicatorMode < 0)
+                voiceIndicatorMode = modeNames.Length - 1;
+
+            string label = "Voice Indicators <color=grey>[</color><color=green>" + modeNames[voiceIndicatorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Voice Indicators").overlapText = label;
+            Buttons.GetIndex("Change Voice Indicator Mode").overlapText = "Change Voice Indicator Mode <color=grey>[</color><color=green>" + modeNames[voiceIndicatorMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void VoiceIndicatorMod()
+        {
+            if (voiceIndicatorMode == 0) VoiceIndicators(); else VoiceESP();
+        }
+
+        public static int platformIndicatorMode;
+
+        public static void ChangePlatformIndicatorMode(bool positive = true)
+        {
+            string[] modeNames = { "Indicators", "ESP" };
+
+            if (positive)
+                platformIndicatorMode++;
+            else
+                platformIndicatorMode--;
+
+            platformIndicatorMode %= modeNames.Length;
+            if (platformIndicatorMode < 0)
+                platformIndicatorMode = modeNames.Length - 1;
+
+            string label = "Platform Indicators <color=grey>[</color><color=green>" + modeNames[platformIndicatorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Platform Indicators").overlapText = label;
+            Buttons.GetIndex("Change Platform Indicator Mode").overlapText = "Change Platform Indicator Mode <color=grey>[</color><color=green>" + modeNames[platformIndicatorMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void PlatformIndicatorMod()
+        {
+            if (platformIndicatorMode == 0) PlatformIndicators(); else PlatformESP();
         }
 
         // Tracers

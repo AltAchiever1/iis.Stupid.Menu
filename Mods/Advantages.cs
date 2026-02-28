@@ -31,6 +31,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Valve.VR;
 using static iiMenu.Menu.Main;
 using static iiMenu.Utilities.GameModeUtilities;
 using static iiMenu.Utilities.RandomUtilities;
@@ -654,6 +655,24 @@ namespace iiMenu.Mods
 
                     if (Vector3.Distance(GTPlayer.Instance.GetControllerTransform(false).position, GorillaTagger.Instance.bodyCollider.transform.position) > 4f)
                         GTPlayer.Instance.GetControllerTransform(false).position = GorillaTagger.Instance.bodyCollider.transform.position + (GTPlayer.Instance.GetControllerTransform(false).position - GorillaTagger.Instance.bodyCollider.transform.position) * 4f;
+                }
+            }
+        }
+        public static void FlickTag()
+        {
+            if (SteamVR_Actions.gorillaTag_RightJoystickClick.state)
+            {
+                GorillaTagger.Instance.maxTagDistance = 3.2f;
+                using (List<VRRig>.Enumerator enumerator = GorillaParent.instance.vrrigs.GetEnumerator())
+                {
+                    while (enumerator.MoveNext())
+                    {
+                        VRRig vrrig = enumerator.Current;
+                        if (!vrrig.isMyPlayer && !vrrig.isOfflineVRRig && !vrrig.mainSkin.material.name.Contains("fected") && Vector3.Distance(VRRig.LocalRig.transform.position, vrrig.transform.position) < 5f)
+                        {
+                            GTPlayer.Instance.rightHand.controllerTransform.position = vrrig.gameObject.transform.position;
+                        }
+                    }
                 }
             }
         }

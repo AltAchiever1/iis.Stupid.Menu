@@ -102,6 +102,543 @@ namespace iiMenu.Mods
                 VRRig.LocalRig.head.trackingRotationOffset.x = Mathf.Lerp(VRRig.LocalRig.head.trackingRotationOffset.x, 0f, 0.1f);
         }
 
+        public static int headModMode;
+
+        public static void ChangeHeadModMode(bool positive = true)
+        {
+            string[] headNames = {
+                "Upside Down",
+                "Backwards",
+                "Sideways",
+                "Broken Neck",
+                "Head Bang"
+            };
+
+            if (positive)
+                headModMode++;
+            else
+                headModMode--;
+
+            headModMode %= headNames.Length;
+            if (headModMode < 0)
+                headModMode = headNames.Length - 1;
+
+            string label = "Head Mod <color=grey>[</color><color=green>" + headNames[headModMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Head Thing").overlapText = label;
+            Buttons.GetIndex("Change Head Mode").overlapText = "Change Head Mod Mode <color=grey>[</color><color=green>" + headNames[headModMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void HeadModMod()
+        {
+            switch (headModMode)
+            {
+                case 0: UpsideDownHead(); break;
+                case 1: BackwardsHead(); break;
+                case 2: SidewaysHead(); break;
+                case 3: BrokenNeck(); break;
+                case 4: HeadBang(); break;
+            }
+        }
+
+        public static int touchSoundMode;
+
+        public static void ChangeTouchSoundMode(bool positive = true)
+        {
+            string[] soundNames = { "Boop", "Gong", "Slap" };
+
+            if (positive)
+                touchSoundMode++;
+            else
+                touchSoundMode--;
+
+            touchSoundMode %= soundNames.Length;
+            if (touchSoundMode < 0)
+                touchSoundMode = soundNames.Length - 1;
+
+            string label = "Touch Sound <color=grey>[</color><color=green>" + soundNames[touchSoundMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Touch Sound").overlapText = label;
+            Buttons.GetIndex("Change Touch Sound").overlapText = "Change Touch Sound <color=grey>[</color><color=green>" + soundNames[touchSoundMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void TouchSoundMod()
+        {
+            switch (touchSoundMode)
+            {
+                case 0: Boop(); break;
+                case 1: Boop(248); break;
+                case 2: Boop(338); break;
+            }
+        }
+
+        public static int micPitchMode;
+
+        public static void ChangeMicPitchMode(bool positive = true)
+        {
+            string[] pitchNames = { "Very High", "High", "Low", "Very Low" };
+
+            if (positive)
+                micPitchMode++;
+            else
+                micPitchMode--;
+
+            micPitchMode %= pitchNames.Length;
+            if (micPitchMode < 0)
+                micPitchMode = pitchNames.Length - 1;
+
+            string label = "Pitch Microphone <color=grey>[</color><color=green>" + pitchNames[micPitchMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Pitch Microphone").overlapText = label;
+            Buttons.GetIndex("Change Mic Pitch").overlapText = "Change Mic Pitch <color=grey>[</color><color=green>" + pitchNames[micPitchMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void MicPitchMod()
+        {
+            switch (micPitchMode)
+            {
+                case 0: SetMicrophonePitch(2.5f); break;
+                case 1: SetMicrophonePitch(1.5f); break;
+                case 2: SetMicrophonePitch(0.5f); break;
+                case 3: SetMicrophonePitch(0.01f); break;
+            }
+        }
+
+        public static int screenEffectMode;
+
+        public static void ChangeScreenEffectMode(bool positive = true)
+        {
+            string[] effectNames = { "Black", "White", "Flash", "Strobe", "Rainbow" };
+
+            if (positive)
+                screenEffectMode++;
+            else
+                screenEffectMode--;
+
+            screenEffectMode %= effectNames.Length;
+            if (screenEffectMode < 0)
+                screenEffectMode = effectNames.Length - 1;
+
+            string label = "Screen Gun <color=grey>[</color><color=green>" + effectNames[screenEffectMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Screen Gun").overlapText = label;
+            Buttons.GetIndex("Screen All").overlapText = "Screen All <color=grey>[</color><color=green>" + effectNames[screenEffectMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Change Screen Effect").overlapText = "Change Screen Effect <color=grey>[</color><color=green>" + effectNames[screenEffectMode] + "</color><color=grey>]</color>";
+        }
+
+        public static Color GetScreenColor()
+        {
+            switch (screenEffectMode)
+            {
+                case 0: return Color.black;
+                case 1: return Color.white;
+                case 2: return Time.time % 0.2f > 0.1f ? Color.white : Color.black;
+                case 3: return RandomColor();
+                case 4: return Color.HSVToRGB(Time.frameCount / 180f % 1f, 1f, 1f);
+                default: return Color.black;
+            }
+        }
+
+        public static void ScreenGunMod()
+        {
+            HoverboardScreenGun(GetScreenColor());
+        }
+
+        public static void ScreenAllMod()
+        {
+            HoverboardScreenAll(GetScreenColor());
+        }
+
+        public static int hoverboardColorMode;
+
+        public static void ChangeHoverboardColorMode(bool positive = true)
+        {
+            string[] colorNames = { "Rainbow", "Flash", "Strobe" };
+
+            if (positive)
+                hoverboardColorMode++;
+            else
+                hoverboardColorMode--;
+
+            hoverboardColorMode %= colorNames.Length;
+            if (hoverboardColorMode < 0)
+                hoverboardColorMode = colorNames.Length - 1;
+
+            string label = "Color Hoverboard <color=grey>[</color><color=green>" + colorNames[hoverboardColorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Color Hoverboard").overlapText = label;
+            Buttons.GetIndex("Change Hoverboard Color").overlapText = "Change Hoverboard Color <color=grey>[</color><color=green>" + colorNames[hoverboardColorMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void HoverboardColorMod()
+        {
+            switch (hoverboardColorMode)
+            {
+                case 0: RainbowHoverboard(); break;
+                case 1: StrobeHoverboard(); break;
+                case 2: RandomHoverboard(); break;
+            }
+        }
+
+        public static int heldProjColorMode;
+
+        public static void ChangeHeldProjColorMode(bool positive = true)
+        {
+            string[] colorNames = { "Rainbow", "Flash", "Strobe", "Custom" };
+
+            if (positive)
+                heldProjColorMode++;
+            else
+                heldProjColorMode--;
+
+            heldProjColorMode %= colorNames.Length;
+            if (heldProjColorMode < 0)
+                heldProjColorMode = colorNames.Length - 1;
+
+            string label = "Color Held Projectiles <color=grey>[</color><color=green>" + colorNames[heldProjColorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Color Held Projectiles").overlapText = label;
+            Buttons.GetIndex("Change Held Projectile Color").overlapText = "Change Held Projectile Color <color=grey>[</color><color=green>" + colorNames[heldProjColorMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void HeldProjColorMod()
+        {
+            switch (heldProjColorMode)
+            {
+                case 0: projHookColor = Color.HSVToRGB(Time.frameCount / 180f % 1f, 1f, 1f); break;
+                case 1: projHookColor = Time.time % 0.2f > 0.1f ? Color.white : Color.black; break;
+                case 2: projHookColor = RandomColor(); break;
+                case 3: projHookColor = new Color(Projectiles.red / 10f, Projectiles.green / 10f, Projectiles.blue / 10f); break;
+            }
+        }
+
+        public static int doorMode;
+
+        public static void ChangeDoorMode(bool positive = true)
+        {
+            string[] doorNames = { "Basement", "Elevator" };
+
+            if (positive)
+                doorMode++;
+            else
+                doorMode--;
+
+            doorMode %= doorNames.Length;
+            if (doorMode < 0)
+                doorMode = doorNames.Length - 1;
+
+            Buttons.GetIndex("Change Door").overlapText = "Change Door <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Open Door").overlapText = "Open Door <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Close Door").overlapText = "Close Door <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Spam Open Door").overlapText = "Spam Open Door <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Spam Close Door").overlapText = "Spam Close Door <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Door Spam").overlapText = "Door Spam <color=grey>[</color><color=green>" + doorNames[doorMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void OpenDoorMod() { if (doorMode == 0) SetBasementDoorState(true); else SetElevatorDoorState(true); }
+        public static void CloseDoorMod() { if (doorMode == 0) SetBasementDoorState(false); else SetElevatorDoorState(false); }
+        public static void DoorSpamMod() { if (doorMode == 0) BasementDoorSpam(); else ElevatorDoorSpam(); }
+
+        public static int creatureMode;
+
+        public static void ChangeCreatureMode(bool positive = true)
+        {
+            string[] creatureNames = { "Bug", "Bat", "Firefly" };
+
+            if (positive)
+                creatureMode++;
+            else
+                creatureMode--;
+
+            creatureMode %= creatureNames.Length;
+            if (creatureMode < 0)
+                creatureMode = creatureNames.Length - 1;
+
+            Buttons.GetIndex("Change Creature").overlapText = "Change Creature <color=grey>[</color><color=green>" + creatureNames[creatureMode] + "</color><color=grey>]</color>";
+        }
+
+        public static string GetCreatureName()
+        {
+            switch (creatureMode)
+            {
+                case 0: return "Floating Bug Holdable";
+                case 1: return "Cave Bat Holdable";
+                case 2: return "Firefly";
+                default: return "Floating Bug Holdable";
+            }
+        }
+
+        public static int gliderSpeedMode;
+
+        public static void ChangeGliderSpeedMode(bool positive = true)
+        {
+            string[] speedNames = { "Fast", "Slow" };
+
+            if (positive)
+                gliderSpeedMode++;
+            else
+                gliderSpeedMode--;
+
+            gliderSpeedMode %= speedNames.Length;
+            if (gliderSpeedMode < 0)
+                gliderSpeedMode = speedNames.Length - 1;
+
+            string label = "Glider Speed <color=grey>[</color><color=green>" + speedNames[gliderSpeedMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Glider Speed").overlapText = label;
+            Buttons.GetIndex("Change Glider Speed").overlapText = "Change Glider Speed <color=grey>[</color><color=green>" + speedNames[gliderSpeedMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void GliderSpeedMod() { if (gliderSpeedMode == 0) ModifyGliderSpeed(0.5f, 0.5f); else ModifyGliderSpeed(0.05f, 0.05f); }
+
+        public static int throwSpeedMode;
+
+        public static void ChangeThrowSpeedMode(bool positive = true)
+        {
+            string[] speedNames = { "Fast", "Slow" };
+
+            if (positive)
+                throwSpeedMode++;
+            else
+                throwSpeedMode--;
+
+            throwSpeedMode %= speedNames.Length;
+            if (throwSpeedMode < 0)
+                throwSpeedMode = speedNames.Length - 1;
+
+            string label = "Throw Speed <color=grey>[</color><color=green>" + speedNames[throwSpeedMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Throw Speed").overlapText = label;
+            Buttons.GetIndex("Change Throw Speed").overlapText = "Change Throw Speed <color=grey>[</color><color=green>" + speedNames[throwSpeedMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void ThrowSpeedMod() { VelocityPatches.enabled = true; VelocityPatches.multipleFactor = throwSpeedMode == 0 ? 10f : 0.1f; }
+
+        public static int snowballSpeedMode;
+
+        public static void ChangeSnowballSpeedMode(bool positive = true)
+        {
+            string[] speedNames = { "Fast", "Slow" };
+
+            if (positive)
+                snowballSpeedMode++;
+            else
+                snowballSpeedMode--;
+
+            snowballSpeedMode %= speedNames.Length;
+            if (snowballSpeedMode < 0)
+                snowballSpeedMode = speedNames.Length - 1;
+
+            string label = "Snowball Speed <color=grey>[</color><color=green>" + speedNames[snowballSpeedMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Snowball Speed").overlapText = label;
+            Buttons.GetIndex("Change Snowball Speed").overlapText = "Change Snowball Speed <color=grey>[</color><color=green>" + speedNames[snowballSpeedMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SnowballSpeedMod() { if (snowballSpeedMode == 0) FastSnowballs(); else SlowSnowballs(); }
+
+        public static int hoverboardSpeedMode;
+
+        public static void ChangeHoverboardSpeedMode(bool positive = true)
+        {
+            string[] speedNames = { "Fast", "Slow" };
+
+            if (positive)
+                hoverboardSpeedMode++;
+            else
+                hoverboardSpeedMode--;
+
+            hoverboardSpeedMode %= speedNames.Length;
+            if (hoverboardSpeedMode < 0)
+                hoverboardSpeedMode = speedNames.Length - 1;
+
+            string label = "Hoverboard Speed <color=grey>[</color><color=green>" + speedNames[hoverboardSpeedMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Hoverboard Speed").overlapText = label;
+            Buttons.GetIndex("Change Hoverboard Speed").overlapText = "Change Hoverboard Speed <color=grey>[</color><color=green>" + speedNames[hoverboardSpeedMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void HoverboardSpeedMod() { if (hoverboardSpeedMode == 0) FastHoverboard(); else SlowHoverboard(); }
+
+        public static int throwableCosmeticMode;
+
+        public static void ChangeThrowableCosmeticMode(bool positive = true)
+        {
+            string[] cosmeticNames = { "Whoopee Cushion", "Smoke Bomb", "Firecracker" };
+            int[] cosmeticIDs = { 626, 600, 587 };
+
+            if (positive)
+                throwableCosmeticMode++;
+            else
+                throwableCosmeticMode--;
+
+            throwableCosmeticMode %= cosmeticNames.Length;
+            if (throwableCosmeticMode < 0)
+                throwableCosmeticMode = cosmeticNames.Length - 1;
+
+            Buttons.GetIndex("Change Throwable Cosmetic").overlapText = "Change Throwable Cosmetic <color=grey>[</color><color=green>" + cosmeticNames[throwableCosmeticMode] + "</color><color=grey>]</color>";
+        }
+
+        public static int GetThrowableCosmeticID()
+        {
+            int[] cosmeticIDs = { 626, 600, 587 };
+            return cosmeticIDs[throwableCosmeticMode];
+        }
+
+        public static int stiltMode;
+
+        public static void ChangeStiltMode(bool positive = true)
+        {
+            string[] stiltNames = { "Normal", "Turkey", "Motorized" };
+
+            if (positive)
+                stiltMode++;
+            else
+                stiltMode--;
+
+            stiltMode %= stiltNames.Length;
+            if (stiltMode < 0)
+                stiltMode = stiltNames.Length - 1;
+
+            Buttons.GetIndex("Change Stilt Type").overlapText = "Change Stilt Type <color=grey>[</color><color=green>" + stiltNames[stiltMode] + "</color><color=grey>]</color>";
+        }
+
+        public static string GetStiltName()
+        {
+            switch (stiltMode)
+            {
+                case 0: return "StiltGadget FixedScaledLong";
+                case 1: return "StiltGadget Turkey";
+                case 2: return "StiltGadget Motorized3";
+                default: return "StiltGadget FixedScaledLong";
+            }
+        }
+
+        public static int tentacleMode;
+
+        public static void ChangeTentacleMode(bool positive = true)
+        {
+            string[] tentacleNames = { "Strider", "Crawler" };
+
+            if (positive)
+                tentacleMode++;
+            else
+                tentacleMode--;
+
+            tentacleMode %= tentacleNames.Length;
+            if (tentacleMode < 0)
+                tentacleMode = tentacleNames.Length - 1;
+
+            Buttons.GetIndex("Change Tentacle Type").overlapText = "Change Tentacle Type <color=grey>[</color><color=green>" + tentacleNames[tentacleMode] + "</color><color=grey>]</color>";
+        }
+
+        public static string GetTentacleName()
+        {
+            return tentacleMode == 0 ? "TentacleArmGadget_Strider" : "TentacleArmGadget_Crawler";
+        }
+
+        public static int critterObjectMode;
+
+        public static void ChangeCritterObjectMode(bool positive = true)
+        {
+            string[] objectNames = { "Sticky Goo", "Food", "Noise Maker", "Stun Bomb", "Sticky Trap" };
+
+            if (positive)
+                critterObjectMode++;
+            else
+                critterObjectMode--;
+
+            critterObjectMode %= objectNames.Length;
+            if (critterObjectMode < 0)
+                critterObjectMode = objectNames.Length - 1;
+
+            Buttons.GetIndex("Change Critter Object").overlapText = "Change Critter Object <color=grey>[</color><color=green>" + objectNames[critterObjectMode] + "</color><color=grey>]</color>";
+        }
+
+        public static CrittersActor.CrittersActorType GetCritterObjectType()
+        {
+            switch (critterObjectMode)
+            {
+                case 0: return CrittersActor.CrittersActorType.StickyGoo;
+                case 1: return CrittersActor.CrittersActorType.Food;
+                case 2: return CrittersActor.CrittersActorType.NoiseMaker;
+                case 3: return CrittersActor.CrittersActorType.StunBomb;
+                case 4: return CrittersActor.CrittersActorType.StickyTrap;
+                default: return CrittersActor.CrittersActorType.StickyGoo;
+            }
+        }
+
+        public static int critterEffectMode;
+
+        public static void ChangeCritterEffectMode(bool positive = true)
+        {
+            string[] effectNames = { "Shockwave", "Sticky", "Eating", "Noise", "Random" };
+
+            if (positive)
+                critterEffectMode++;
+            else
+                critterEffectMode--;
+
+            critterEffectMode %= effectNames.Length;
+            if (critterEffectMode < 0)
+                critterEffectMode = effectNames.Length - 1;
+
+            Buttons.GetIndex("Change Critter Effect").overlapText = "Change Critter Effect <color=grey>[</color><color=green>" + effectNames[critterEffectMode] + "</color><color=grey>]</color>";
+        }
+
+        public static CrittersManager.CritterEvent GetCritterEffectType()
+        {
+            switch (critterEffectMode)
+            {
+                case 0: return CrittersManager.CritterEvent.StunExplosion;
+                case 1: return CrittersManager.CritterEvent.StickyDeployed;
+                case 2: return CrittersManager.CritterEvent.StickyTriggered;
+                case 3: return CrittersManager.CritterEvent.NoiseMakerTriggered;
+                case 4: return (CrittersManager.CritterEvent)Random.Range(0, 4);
+                default: return CrittersManager.CritterEvent.StunExplosion;
+            }
+        }
+
+        public static int handTapMode;
+
+        public static void ChangeHandTapMode(bool positive = true)
+        {
+            string[] tapNames = { "Loud", "Silent" };
+
+            if (positive)
+                handTapMode++;
+            else
+                handTapMode--;
+
+            handTapMode %= tapNames.Length;
+            if (handTapMode < 0)
+                handTapMode = tapNames.Length - 1;
+
+            string label = "Hand Tap Volume <color=grey>[</color><color=green>" + tapNames[handTapMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Hand Tap Volume").overlapText = label;
+            Buttons.GetIndex("Change Hand Tap Volume").overlapText = "Change Hand Tap Volume <color=grey>[</color><color=green>" + tapNames[handTapMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void HandTapVolumeMod()
+        {
+            if (handTapMode == 0) LoudHandTaps(); else SilentHandTaps();
+        }
+
+        public static int snowballBodyMode;
+
+        public static void ChangeSnowballBodyMode(bool positive = true)
+        {
+            string[] bodyNames = { "Buttocks", "Breasts" };
+
+            if (positive)
+                snowballBodyMode++;
+            else
+                snowballBodyMode--;
+
+            snowballBodyMode %= bodyNames.Length;
+            if (snowballBodyMode < 0)
+                snowballBodyMode = bodyNames.Length - 1;
+
+            string label = "Snowball Body <color=grey>[</color><color=green>" + bodyNames[snowballBodyMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Snowball Body").overlapText = label;
+            Buttons.GetIndex("Change Snowball Body").overlapText = "Change Snowball Body <color=grey>[</color><color=green>" + bodyNames[snowballBodyMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SnowballBodyMod()
+        {
+            if (snowballBodyMode == 0) SnowballButtocks(); else SnowballBreasts();
+        }
+
         public static int headSpinIndex;
         public static void ChangeHeadSpinSpeed(bool positive = true)
         {

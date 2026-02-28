@@ -19,6 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+
 namespace iiMenu
 {
     public class PluginInfo
@@ -26,13 +28,13 @@ namespace iiMenu
         public const string GUID = "org.iidk.gorillatag.iimenu";
         public const string Name = "ii's Stupid Menu";
         public const string Description = "Created by @crimsoncauldron with love <3";
-        public const string BuildTimestamp = "2026-02-23T03:36:03Z";
-        public const string Version = "8.3.0";
+        public static readonly string BuildTimestamp = DateTime.UtcNow.ToString("o"); // im too lazy for manual updating
+        public const string Version = "8.3.1";
 
         public const string BaseDirectory = "iisStupidMenu";
         public const string ClientResourcePath = "iiMenu.Resources.Client";
         public const string ServerResourcePath = "https://raw.githubusercontent.com/iiDk-the-actual/iis.Stupid.Menu/master/Resources/Server";
-        public const string ServerAPI = "https://connivent-leta-homely.ngrok-free.dev "; // Server now closed source due to bad actors :( For any questions, please make an issue on the GitHub repository.
+        public const string ServerAPI = "https://connivent-leta-homely.ngrok-free.dev"; // Server now closed source due to bad actors :( For any questions, please make an issue on the GitHub repository.
         
         public const string Logo = @"••╹   ┏┓     • ┓  ┳┳┓      
 ┓┓ ┏  ┗┓╋┓┏┏┓┓┏┫  ┃┃┃┏┓┏┓┓┏

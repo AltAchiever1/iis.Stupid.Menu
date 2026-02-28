@@ -49,6 +49,168 @@ namespace iiMenu.Mods
         public static bool lastHit2;
         public static bool lastRG;
 
+        public static int spinHeadMode;
+
+        public static void ChangeSpinHeadMode(bool positive = true)
+        {
+            string[] axisNames = { "X", "Y", "Z" };
+
+            if (positive)
+                spinHeadMode++;
+            else
+                spinHeadMode--;
+
+            spinHeadMode %= axisNames.Length;
+            if (spinHeadMode < 0)
+                spinHeadMode = axisNames.Length - 1;
+
+            string label = "Spin Head <color=grey>[</color><color=green>" + axisNames[spinHeadMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Spin Head").overlapText = label;
+            Buttons.GetIndex("Change Spin Head Axis").overlapText = "Change Spin Head Axis <color=grey>[</color><color=green>" + axisNames[spinHeadMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SpinHeadMod()
+        {
+            switch (spinHeadMode)
+            {
+                case 0: Fun.SpinHead("x"); break;
+                case 1: Fun.SpinHead("y"); break;
+                case 2: Fun.SpinHead("z"); break;
+            }
+        }
+
+        public static int spazHeadMode;
+
+        public static void ChangeSpazHeadMode(bool positive = true)
+        {
+            string[] spazNames = {
+                "Random Position",
+                "Random Rotation",
+                "Position",
+                "Rotation",
+                "X",
+                "Y",
+                "Z"
+            };
+
+            if (positive)
+                spazHeadMode++;
+            else
+                spazHeadMode--;
+
+            spazHeadMode %= spazNames.Length;
+            if (spazHeadMode < 0)
+                spazHeadMode = spazNames.Length - 1;
+
+            string label = "Spaz Head <color=grey>[</color><color=green>" + spazNames[spazHeadMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Spaz Head").overlapText = label;
+            Buttons.GetIndex("Change Spaz Head Mode").overlapText = "Change Spaz Head Mode <color=grey>[</color><color=green>" + spazNames[spazHeadMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SpazHeadMod()
+        {
+            switch (spazHeadMode)
+            {
+                case 0: RandomSpazHeadPosition(); break;
+                case 1: RandomSpazHead(); break;
+                case 2: SpazHeadPosition(); break;
+                case 3: SpazHead(); break;
+                case 4: Fun.SpazHead("x"); break;
+                case 5: Fun.SpazHead("y"); break;
+                case 6: Fun.SpazHead("z"); break;
+            }
+        }
+
+        public static void EnableSpazHeadMod()
+        {
+            if (spazHeadMode == 0 || spazHeadMode == 2)
+                EnableSpazHead();
+        }
+
+        public static void DisableSpazHeadMod()
+        {
+            if (spazHeadMode == 0 || spazHeadMode == 2)
+                FixHeadPosition();
+            else
+                Fun.FixHead();
+        }
+
+        public static int bodyPatchMode;
+
+        public static void ChangeBodyPatchMode(bool positive = true)
+        {
+            string[] bodyNames = {
+                "Spin",
+                "Spaz",
+                "Reverse",
+                "Rec Room",
+                "Freeze"
+            };
+
+            if (positive)
+                bodyPatchMode++;
+            else
+                bodyPatchMode--;
+
+            bodyPatchMode %= bodyNames.Length;
+            if (bodyPatchMode < 0)
+                bodyPatchMode = bodyNames.Length - 1;
+
+            string label = "Body Mod <color=grey>[</color><color=green>" + bodyNames[bodyPatchMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Body Mod").overlapText = label;
+            Buttons.GetIndex("Change Body Mod Mode").overlapText = "Change Body Mod Mode <color=grey>[</color><color=green>" + bodyNames[bodyPatchMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void BodyPatchMod()
+        {
+            switch (bodyPatchMode)
+            {
+                case 0: SetBodyPatch(true); break;
+                case 1: SetBodyPatch(true, 1); break;
+                case 2: SetBodyPatch(true, 2); break;
+                case 3: RecRoomBody(); break;
+                case 4: FreezeBodyRotation(); break;
+            }
+        }
+
+        public static int beybladeMode;
+
+        public static void ChangeBeybladeMode(bool positive = true)
+        {
+            string[] bladeNames = {
+                "Normal",
+                "Still"
+            };
+
+            if (positive)
+                beybladeMode++;
+            else
+                beybladeMode--;
+
+            beybladeMode %= bladeNames.Length;
+            if (beybladeMode < 0)
+                beybladeMode = bladeNames.Length - 1;
+
+            string label = "Beyblade <color=grey>[</color><color=green>" + bladeNames[beybladeMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Beyblade").overlapText = label;
+            Buttons.GetIndex("Change Beyblade Mode").overlapText = "Change Beyblade Mode <color=grey>[</color><color=green>" + bladeNames[beybladeMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void BeybladeMod()
+        {
+            switch (beybladeMode)
+            {
+                case 0: Beyblade(); break;
+                case 1: StillBeyblade(); break;
+            }
+        }
+
+        public static void DisableBeybladeMod()
+        {
+            if (beybladeMode == 1)
+                stillBeybladeStartPos = Vector3.zero;
+        }
+
         public static void Invisible()
         {
             bool hit = rightSecondary;

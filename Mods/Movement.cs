@@ -443,6 +443,393 @@ namespace iiMenu.Mods
             Buttons.GetIndex("Change Arm Length").overlapText = "Change Arm Length <color=grey>[</color><color=green>" + lengthNames[longarmCycle] + "</color><color=grey>]</color>";
         }
 
+        public static int flyMode;
+        public static void ChangeFlyMode(bool positive = true)
+        {
+            string[] flyNames = {
+                "Normal",
+                "Trigger",
+                "Noclip",
+                "Joystick",
+                "Bark",
+                "Hand",
+                "Gun",
+                "Slingshot",
+                "Zero G Slingshot",
+                "Slingshot Bark",
+                "Bird"
+            };
+
+            if (positive)
+                flyMode++;
+            else
+                flyMode--;
+
+            flyMode %= flyNames.Length;
+            if (flyMode < 0)
+                flyMode = flyNames.Length - 1;
+
+            string label = "Fly <color=grey>[</color><color=green>" + flyNames[flyMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Fly").overlapText = label;
+            Buttons.GetIndex("Change Fly Mode").overlapText = "Change Fly Mode <color=grey>[</color><color=green>" + flyNames[flyMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void FlyMod()
+        {
+            switch (flyMode)
+            {
+                case 0: Fly(); break;
+                case 1: TriggerFly(); break;
+                case 2: NoclipFly(); break;
+                case 3: JoystickFly(); break;
+                case 4: BarkFly(); break;
+                case 5: HandFly(); break;
+                case 6: FlyTowardsGun(); break;
+                case 7: SlingshotFly(); break;
+                case 8: ZeroGravitySlingshotFly(); break;
+                case 9: VelocityBarkFly(); break;
+                case 10: BirdFly(); break;
+            }
+        }
+
+        public static void DisableFlyMod()
+        {
+            if (noclip)
+            {
+                noclip = false;
+                UpdateClipColliders(true);
+            }
+        }
+
+        public static int gravityMode;
+
+        public static void ChangeGravityMode(bool positive = true)
+        {
+            string[] gravityNames = {
+                "Feather Falling",
+                "Low",
+                "Zero",
+                "High",
+                "Reverse"
+            };
+
+            if (positive)
+                gravityMode++;
+            else
+                gravityMode--;
+
+            gravityMode %= gravityNames.Length;
+            if (gravityMode < 0)
+                gravityMode = gravityNames.Length - 1;
+
+            string label = "Gravity <color=grey>[</color><color=green>" + gravityNames[gravityMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Gravity").overlapText = label;
+            Buttons.GetIndex("Change Gravity Mode").overlapText = "Change Gravity Mode <color=grey>[</color><color=green>" + gravityNames[gravityMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void GravityMod()
+        {
+            switch (gravityMode)
+            {
+                case 0: FeatherFalling(); break;
+                case 1: LowGravity(); break;
+                case 2: ZeroGravity(); break;
+                case 3: HighGravity(); break;
+                case 4: ReverseGravity(); break;
+            }
+        }
+
+        public static void DisableGravityMod()
+        {
+            if (gravityMode == 4)
+                UnflipCharacter();
+        }
+
+        public static int longArmsMode;
+
+        public static void ChangeLongArmsMode(bool positive = true)
+        {
+            string[] armNames = {
+                "Steam",
+                "Stick",
+                "Multiplied",
+                "Vertical",
+                "Horizontal",
+                "Extenders"
+            };
+
+            if (positive)
+                longArmsMode++;
+            else
+                longArmsMode--;
+
+            longArmsMode %= armNames.Length;
+            if (longArmsMode < 0)
+                longArmsMode = armNames.Length - 1;
+
+            string label = "Long Arms <color=grey>[</color><color=green>" + armNames[longArmsMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Long Arms").overlapText = label;
+            Buttons.GetIndex("Change Long Arms Mode").overlapText = "Change Long Arms Mode <color=grey>[</color><color=green>" + armNames[longArmsMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void LongArmsMod()
+        {
+            switch (longArmsMode)
+            {
+                case 0: EnableSteamLongArms(); break;
+                case 1: StickLongArms(); break;
+                case 2: MultipliedLongArms(); break;
+                case 3: VerticalLongArms(); break;
+                case 4: HorizontalLongArms(); break;
+                case 5: extendingTime = 0f; Extenders(); break;
+            }
+        }
+
+        public static void DisableLongArmsMod()
+        {
+            DisableSteamLongArms();
+        }
+
+        public static int speedBoostMode;
+
+        public static void ChangeSpeedBoostMode(bool positive = true)
+        {
+            string[] speedNames = {
+                "Normal",
+                "Grip",
+                "Dynamic"
+            };
+
+            if (positive)
+                speedBoostMode++;
+            else
+                speedBoostMode--;
+
+            speedBoostMode %= speedNames.Length;
+            if (speedBoostMode < 0)
+                speedBoostMode = speedNames.Length - 1;
+
+            string label = "Speed Boost <color=grey>[</color><color=green>" + speedNames[speedBoostMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Speed Boost").overlapText = label;
+            Buttons.GetIndex("Change Speed Boost Mode").overlapText = "Change Speed Boost Mode <color=grey>[</color><color=green>" + speedNames[speedBoostMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SpeedBoostMod()
+        {
+            switch (speedBoostMode)
+            {
+                case 0: SpeedBoost(); break;
+                case 1: if (rightGrab) { SpeedBoost(); } break;
+                case 2: DynamicSpeedBoost(); break;
+            }
+        }
+
+        public static int driveMode;
+
+        public static void ChangeDriveMode(bool positive = true)
+        {
+            string[] driveNames = {
+                "Normal",
+                "Sticky"
+            };
+
+            if (positive)
+                driveMode++;
+            else
+                driveMode--;
+
+            driveMode %= driveNames.Length;
+            if (driveMode < 0)
+                driveMode = driveNames.Length - 1;
+
+            string label = "Drive <color=grey>[</color><color=green>" + driveNames[driveMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Drive").overlapText = label;
+            Buttons.GetIndex("Change Drive Mode").overlapText = "Change Drive Mode <color=grey>[</color><color=green>" + driveNames[driveMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void DriveMod()
+        {
+            switch (driveMode)
+            {
+                case 0: Drive(); break;
+                case 1: HardDrive(); break;
+            }
+        }
+
+        public static int wallWalkMode;
+
+        public static void ChangeWallWalkMode(bool positive = true)
+        {
+            string[] wallNames = {
+                "Normal",
+                "Legitimate",
+                "Spider"
+            };
+
+            if (positive)
+                wallWalkMode++;
+            else
+                wallWalkMode--;
+
+            wallWalkMode %= wallNames.Length;
+            if (wallWalkMode < 0)
+                wallWalkMode = wallNames.Length - 1;
+
+            string label = "Wall Walk <color=grey>[</color><color=green>" + wallNames[wallWalkMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Wall Walk").overlapText = label;
+            Buttons.GetIndex("Change Wall Walk Mode").overlapText = "Change Wall Walk Mode <color=grey>[</color><color=green>" + wallNames[wallWalkMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void WallWalkMod()
+        {
+            switch (wallWalkMode)
+            {
+                case 0: WallWalk(); break;
+                case 1: LegitimateWallWalk(); break;
+                case 2: SpiderWalk(); break;
+            }
+        }
+
+        public static void DisableWallWalkMod()
+        {
+            if (wallWalkMode == 2)
+                UnflipCharacter();
+        }
+
+        public static int slideControlMode;
+
+        public static void ChangeSlideControlMode(bool positive = true)
+        {
+            string[] slideNames = {
+                "Normal",
+                "Weak"
+            };
+
+            if (positive)
+                slideControlMode++;
+            else
+                slideControlMode--;
+
+            slideControlMode %= slideNames.Length;
+            if (slideControlMode < 0)
+                slideControlMode = slideNames.Length - 1;
+
+            string label = "Slide Control <color=grey>[</color><color=green>" + slideNames[slideControlMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Slide Control").overlapText = label;
+            Buttons.GetIndex("Change Slide Control Mode").overlapText = "Change Slide Control Mode <color=grey>[</color><color=green>" + slideNames[slideControlMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void SlideControlMod()
+        {
+            switch (slideControlMode)
+            {
+                case 0: EnableSlideControl(); break;
+                case 1: EnableWeakSlideControl(); break;
+            }
+        }
+
+        public static int strafeMode;
+
+        public static void ChangeStrafeMode(bool positive = true)
+        {
+            string[] strafeNames = {
+                "Normal",
+                "Dynamic"
+            };
+
+            if (positive)
+                strafeMode++;
+            else
+                strafeMode--;
+
+            strafeMode %= strafeNames.Length;
+            if (strafeMode < 0)
+                strafeMode = strafeNames.Length - 1;
+
+            string label = "Strafe <color=grey>[</color><color=green>" + strafeNames[strafeMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Strafe").overlapText = label;
+            Buttons.GetIndex("Change Strafe Mode").overlapText = "Change Strafe Mode <color=grey>[</color><color=green>" + strafeNames[strafeMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void StrafeMod()
+        {
+            switch (strafeMode)
+            {
+                case 0: Strafe(); break;
+                case 1: DynamicStrafe(); break;
+            }
+        }
+
+        public static int checkpointMode;
+
+        public static void ChangeCheckpointMode(bool positive = true)
+        {
+            string[] cpNames = {
+                "Normal",
+                "Advanced"
+            };
+
+            if (positive)
+                checkpointMode++;
+            else
+                checkpointMode--;
+
+            checkpointMode %= cpNames.Length;
+            if (checkpointMode < 0)
+                checkpointMode = cpNames.Length - 1;
+
+            string label = "Checkpoint <color=grey>[</color><color=green>" + cpNames[checkpointMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Checkpoint").overlapText = label;
+            Buttons.GetIndex("Change Checkpoint Mode").overlapText = "Change Checkpoint Mode <color=grey>[</color><color=green>" + cpNames[checkpointMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void CheckpointMod()
+        {
+            switch (checkpointMode)
+            {
+                case 0: Checkpoint(); break;
+                case 1: AdvancedCheckpoints(); break;
+            }
+        }
+
+        public static void DisableCheckpointMod()
+        {
+            DisableCheckpoint();
+            DisableAdvancedCheckpoints();
+        }
+
+        public static int platformTriggerMode;
+
+        public static void ChangePlatformTriggerMode(bool positive = true)
+        {
+            string[] trigNames = {
+                "Grip",
+                "Trigger"
+            };
+
+            if (positive)
+                platformTriggerMode++;
+            else
+                platformTriggerMode--;
+
+            platformTriggerMode %= trigNames.Length;
+            if (platformTriggerMode < 0)
+                platformTriggerMode = trigNames.Length - 1;
+
+            string label = "Platforms <color=grey>[</color><color=green>" + trigNames[platformTriggerMode] + "</color><color=grey>]</color>";
+            Buttons.GetIndex("Platforms").overlapText = label;
+            Buttons.GetIndex("Change Platform Trigger").overlapText = "Change Platform Trigger <color=grey>[</color><color=green>" + trigNames[platformTriggerMode] + "</color><color=grey>]</color>";
+        }
+
+        public static void PlatformsMod()
+        {
+            switch (platformTriggerMode)
+            {
+                case 0: Platforms(); break;
+                case 1: Platforms(leftTrigger > 0.5f, rightTrigger > 0.5f); break;
+            }
+        }
+
         public static void Fly()
         {
             if (rightPrimary)

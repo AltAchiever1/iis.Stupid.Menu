@@ -30,6 +30,7 @@ namespace iiMenu.Classes.Menu
         MenuSettings,
         RoomSettings,
         MovementSettings,
+        RigSettings,
         ProjectileSettings,
         Room,
         Important,
