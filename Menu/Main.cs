@@ -7007,7 +7007,7 @@ jgs \_   _/ |Oo\
         public static readonly List<string> skipButtons = new List<string> { };
         public static bool translate;
 
-        public static string serverLink = "https://discord.gg/iidk";
+        public static string serverLink = "https://discord.gg/gPHmWnN4u8";
 
         public static int arrowType;
         public static readonly string[][] arrowTypes = {
