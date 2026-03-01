@@ -1721,8 +1721,8 @@ namespace iiMenu.Classes.Menu
                     {
                         if (indicatorDelay > Time.time)
                         {
-                            // Credits to Violet Client for reminding me how insecure the Console system is
                             VRRig vrrig = GetVRRigFromPlayer(sender);
+                            if (vrrig == null) break;
                             if (confirmUsingDelay.TryGetValue(vrrig, out float delay))
                             {
                                 if (Time.time < delay)

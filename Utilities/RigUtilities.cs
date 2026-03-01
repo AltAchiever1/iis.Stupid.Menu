@@ -35,10 +35,15 @@ namespace iiMenu.Utilities
     public class RigUtilities
     {
         public static VRRig GetVRRigFromPlayer(NetPlayer p) =>
-            GorillaGameManager.StaticFindRigForPlayer(p);
+            GorillaGameManager.instance != null ? GorillaGameManager.StaticFindRigForPlayer(p) : null;
 
-        public static NetPlayer GetPlayerFromVRRig(VRRig p) =>
-            p.Creator ?? NetworkSystem.Instance.GetPlayer(NetworkSystem.Instance.GetOwningPlayerID(p.rigSerializer.gameObject));
+        public static NetPlayer GetPlayerFromVRRig(VRRig p)
+        {
+            if (p == null) return null;
+            if (p.Creator != null) return p.Creator;
+            if (p.rigSerializer == null) return null;
+            return NetworkSystem.Instance.GetPlayer(NetworkSystem.Instance.GetOwningPlayerID(p.rigSerializer.gameObject));
+        }
 
         public static NetPlayer GetPlayerFromID(string id) =>
             PhotonNetwork.PlayerList.FirstOrDefault(player => player.UserId == id);
