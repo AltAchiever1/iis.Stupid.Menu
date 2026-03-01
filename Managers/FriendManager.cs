@@ -1315,13 +1315,15 @@ namespace iiMenu.Managers
 
         public class FriendWebSocket : MonoBehaviour
         {
-            public const string FriendWebsocket = "wss://iidk.online";
+            public static string FriendWebsocket => PluginInfo.ServerAPI.Replace("https://", "wss://").Replace("http://", "ws://");
 
             public ClientWebSocket ws;
             public CancellationTokenSource cts;
 
             public bool connected;
             public float reconnectTime = 14f;
+            public float reconnectInterval = 15f;
+            public int failedAttempts;
 
             public static FriendWebSocket Instance { get; private set; }
             public void Awake() =>
@@ -1334,7 +1336,7 @@ namespace iiMenu.Managers
             {
                 if (connected) return;
                 reconnectTime += Time.unscaledDeltaTime;
-                if (!(reconnectTime >= 15f)) return;
+                if (!(reconnectTime >= reconnectInterval)) return;
                 reconnectTime = 0f;
                 _ = Connect();
             }
@@ -1346,20 +1348,35 @@ namespace iiMenu.Managers
 
                 try
                 {
+                    ws?.Dispose();
                     ws = new ClientWebSocket();
                     await ws.ConnectAsync(new Uri(FriendWebsocket), cts.Token);
 
                     if (ws.State == WebSocketState.Open)
                     {
                         connected = true;
+                        failedAttempts = 0;
+                        reconnectInterval = 15f;
                         LogManager.Log("Connected to friends websocket");
+
+                        await Send(JsonConvert.SerializeObject(new
+                        {
+                            command = "identify",
+                            uid = PhotonNetwork.LocalPlayer.UserId
+                        }));
+
                         _ = Receive();
                     }
                 }
                 catch (Exception e)
                 {
                     connected = false;
-                    LogManager.LogError($"Could not connect to friends websocket: {e.Message}");
+                    failedAttempts++;
+                    reconnectInterval = Math.Min(15f * (float)Math.Pow(2, failedAttempts), 300f);
+                    if (failedAttempts <= 3)
+                        LogManager.LogError($"Could not connect to friends websocket: {e.Message}");
+                    ws?.Dispose();
+                    ws = null;
                 }
             }
 
