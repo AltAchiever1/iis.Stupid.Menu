@@ -6290,7 +6290,7 @@ exit 0";
                 Movement.ChangeCheckpointMode();
 
                 Movement.platformTriggerMode = int.Parse(data[78]) - 1;
-                Movement.ChangePlatformTrigger();
+                Movement.ChangePlatformTriggerMode();
 
                 Visuals.espMode = int.Parse(data[79]) - 1;
                 Visuals.ChangeESPType();
