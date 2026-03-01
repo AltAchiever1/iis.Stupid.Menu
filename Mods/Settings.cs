@@ -5945,7 +5945,44 @@ exit 0";
                 Overpowered.lagTypeIndex.ToString(),
                 Overpowered.masterVisualizationType.ToString(),
                 Movement.targetHz.ToString(),
-                Safety.pingSpoofValue.ToString()
+                Safety.pingSpoofValue.ToString(),
+                Movement.flyMode.ToString(),
+                Movement.gravityMode.ToString(),
+                Movement.longArmsMode.ToString(),
+                Movement.speedBoostMode.ToString(),
+                Movement.driveMode.ToString(),
+                Movement.wallWalkMode.ToString(),
+                Movement.slideControlMode.ToString(),
+                Movement.strafeMode.ToString(),
+                Movement.checkpointMode.ToString(),
+                Movement.platformTriggerMode.ToString(),
+                Visuals.espMode.ToString(),
+                Visuals.timeOfDayMode.ToString(),
+                Visuals.voiceIndicatorMode.ToString(),
+                Visuals.platformIndicatorMode.ToString(),
+                Rig.spinHeadMode.ToString(),
+                Rig.spazHeadMode.ToString(),
+                Rig.bodyPatchMode.ToString(),
+                Rig.beybladeMode.ToString(),
+                Fun.headModMode.ToString(),
+                Fun.touchSoundMode.ToString(),
+                Fun.micPitchMode.ToString(),
+                Fun.screenEffectMode.ToString(),
+                Fun.hoverboardColorMode.ToString(),
+                Fun.heldProjColorMode.ToString(),
+                Fun.doorMode.ToString(),
+                Fun.creatureMode.ToString(),
+                Fun.gliderSpeedMode.ToString(),
+                Fun.throwSpeedMode.ToString(),
+                Fun.snowballSpeedMode.ToString(),
+                Fun.hoverboardSpeedMode.ToString(),
+                Fun.throwableCosmeticMode.ToString(),
+                Fun.stiltMode.ToString(),
+                Fun.tentacleMode.ToString(),
+                Fun.critterObjectMode.ToString(),
+                Fun.critterEffectMode.ToString(),
+                Fun.handTapMode.ToString(),
+                Fun.snowballBodyMode.ToString()
             };
 
             string settingstext = string.Join(seperator, settings);
@@ -6224,6 +6261,117 @@ exit 0";
 
                 Safety.pingSpoofValue = int.Parse(data[68]) - 100;
                 Safety.ChangePingSpoofValue();
+
+                Movement.flyMode = int.Parse(data[69]) - 1;
+                Movement.ChangeFlyMode();
+
+                Movement.gravityMode = int.Parse(data[70]) - 1;
+                Movement.ChangeGravityMode();
+
+                Movement.longArmsMode = int.Parse(data[71]) - 1;
+                Movement.ChangeLongArmsMode();
+
+                Movement.speedBoostMode = int.Parse(data[72]) - 1;
+                Movement.ChangeSpeedBoostMode();
+
+                Movement.driveMode = int.Parse(data[73]) - 1;
+                Movement.ChangeDriveMode();
+
+                Movement.wallWalkMode = int.Parse(data[74]) - 1;
+                Movement.ChangeWallWalkMode();
+
+                Movement.slideControlMode = int.Parse(data[75]) - 1;
+                Movement.ChangeSlideControlMode();
+
+                Movement.strafeMode = int.Parse(data[76]) - 1;
+                Movement.ChangeStrafeMode();
+
+                Movement.checkpointMode = int.Parse(data[77]) - 1;
+                Movement.ChangeCheckpointMode();
+
+                Movement.platformTriggerMode = int.Parse(data[78]) - 1;
+                Movement.ChangePlatformTrigger();
+
+                Visuals.espMode = int.Parse(data[79]) - 1;
+                Visuals.ChangeESPType();
+
+                Visuals.timeOfDayMode = int.Parse(data[80]) - 1;
+                Visuals.ChangeTimeOfDay();
+
+                Visuals.voiceIndicatorMode = int.Parse(data[81]) - 1;
+                Visuals.ChangeVoiceIndicatorMode();
+
+                Visuals.platformIndicatorMode = int.Parse(data[82]) - 1;
+                Visuals.ChangePlatformIndicatorMode();
+
+                Rig.spinHeadMode = int.Parse(data[83]) - 1;
+                Rig.ChangeSpinHeadMode();
+
+                Rig.spazHeadMode = int.Parse(data[84]) - 1;
+                Rig.ChangeSpazHeadMode();
+
+                Rig.bodyPatchMode = int.Parse(data[85]) - 1;
+                Rig.ChangeBodyPatchMode();
+
+                Rig.beybladeMode = int.Parse(data[86]) - 1;
+                Rig.ChangeBeybladeMode();
+
+                Fun.headModMode = int.Parse(data[87]) - 1;
+                Fun.ChangeHeadModMode();
+
+                Fun.touchSoundMode = int.Parse(data[88]) - 1;
+                Fun.ChangeTouchSoundMode();
+
+                Fun.micPitchMode = int.Parse(data[89]) - 1;
+                Fun.ChangeMicPitchMode();
+
+                Fun.screenEffectMode = int.Parse(data[90]) - 1;
+                Fun.ChangeScreenEffectMode();
+
+                Fun.hoverboardColorMode = int.Parse(data[91]) - 1;
+                Fun.ChangeHoverboardColorMode();
+
+                Fun.heldProjColorMode = int.Parse(data[92]) - 1;
+                Fun.ChangeHeldProjColorMode();
+
+                Fun.doorMode = int.Parse(data[93]) - 1;
+                Fun.ChangeDoorMode();
+
+                Fun.creatureMode = int.Parse(data[94]) - 1;
+                Fun.ChangeCreatureMode();
+
+                Fun.gliderSpeedMode = int.Parse(data[95]) - 1;
+                Fun.ChangeGliderSpeedMode();
+
+                Fun.throwSpeedMode = int.Parse(data[96]) - 1;
+                Fun.ChangeThrowSpeedMode();
+
+                Fun.snowballSpeedMode = int.Parse(data[97]) - 1;
+                Fun.ChangeSnowballSpeedMode();
+
+                Fun.hoverboardSpeedMode = int.Parse(data[98]) - 1;
+                Fun.ChangeHoverboardSpeedMode();
+
+                Fun.throwableCosmeticMode = int.Parse(data[99]) - 1;
+                Fun.ChangeThrowableCosmeticMode();
+
+                Fun.stiltMode = int.Parse(data[100]) - 1;
+                Fun.ChangeStiltMode();
+
+                Fun.tentacleMode = int.Parse(data[101]) - 1;
+                Fun.ChangeTentacleMode();
+
+                Fun.critterObjectMode = int.Parse(data[102]) - 1;
+                Fun.ChangeCritterObjectMode();
+
+                Fun.critterEffectMode = int.Parse(data[103]) - 1;
+                Fun.ChangeCritterEffectMode();
+
+                Fun.handTapMode = int.Parse(data[104]) - 1;
+                Fun.ChangeHandTapMode();
+
+                Fun.snowballBodyMode = int.Parse(data[105]) - 1;
+                Fun.ChangeSnowballBodyMode();
             }
             catch { LogManager.Log("Save file out of date"); }
 
