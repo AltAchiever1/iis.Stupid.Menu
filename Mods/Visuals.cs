@@ -965,7 +965,7 @@ namespace iiMenu.Mods
                     startTime = Time.time;
             }
         }
-
+       
         public static void PingOverlay()
         {
             VRRig masterRig = PhotonNetwork.MasterClient?.VRRig();
@@ -5550,6 +5550,10 @@ namespace iiMenu.Mods
                 "Distance"
             };
 
+            ButtonInfo espButton = Buttons.GetIndex("ESP");
+            if (espButton != null && espButton.enabled)
+                DisableESPMod();
+
             if (positive)
                 espMode++;
             else
@@ -5560,7 +5564,7 @@ namespace iiMenu.Mods
                 espMode = espNames.Length - 1;
 
             string label = "ESP <color=grey>[</color><color=green>" + espNames[espMode] + "</color><color=grey>]</color>";
-            Buttons.GetIndex("ESP").overlapText = label;
+            espButton.overlapText = label;
             Buttons.GetIndex("Change ESP Type").overlapText = "Change ESP Type <color=grey>[</color><color=green>" + espNames[espMode] + "</color><color=grey>]</color>";
         }
 
@@ -5645,8 +5649,12 @@ namespace iiMenu.Mods
             if (voiceIndicatorMode < 0)
                 voiceIndicatorMode = modeNames.Length - 1;
 
+            ButtonInfo viButton = Buttons.GetIndex("Voice Indicators");
+            if (viButton != null && viButton.enabled)
+                DisableVoiceIndicators();
+
             string label = "Voice Indicators <color=grey>[</color><color=green>" + modeNames[voiceIndicatorMode] + "</color><color=grey>]</color>";
-            Buttons.GetIndex("Voice Indicators").overlapText = label;
+            viButton.overlapText = label;
             Buttons.GetIndex("Change Voice Indicator Mode").overlapText = "Change Voice Indicator Mode <color=grey>[</color><color=green>" + modeNames[voiceIndicatorMode] + "</color><color=grey>]</color>";
         }
 
@@ -5670,8 +5678,12 @@ namespace iiMenu.Mods
             if (platformIndicatorMode < 0)
                 platformIndicatorMode = modeNames.Length - 1;
 
+            ButtonInfo piButton = Buttons.GetIndex("Platform Indicators");
+            if (piButton != null && piButton.enabled)
+                DisablePlatformIndicators();
+
             string label = "Platform Indicators <color=grey>[</color><color=green>" + modeNames[platformIndicatorMode] + "</color><color=grey>]</color>";
-            Buttons.GetIndex("Platform Indicators").overlapText = label;
+            piButton.overlapText = label;
             Buttons.GetIndex("Change Platform Indicator Mode").overlapText = "Change Platform Indicator Mode <color=grey>[</color><color=green>" + modeNames[platformIndicatorMode] + "</color><color=grey>]</color>";
         }
 
