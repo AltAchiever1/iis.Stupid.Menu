@@ -270,7 +270,7 @@ namespace iiMenu.Mods
 
             if ((rightTrigger > 0.5f || Mouse.current.leftButton.isPressed) && !lastTrigger)
             {
-                TutorialButton gunTarget = Ray.collider.GetComponentInParent<TutorialButton>();
+                TutorialButton gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<TutorialButton>() : null;
                 if (gunTarget)
                     gunTarget.ClickButton();
             }
@@ -5694,8 +5694,8 @@ exit 0";
                 pingLine.SetPosition(0, StartPosition);
                 pingLine.SetPosition(1, EndPosition);
 
-                VRRig rigTarget = Ray.collider.GetComponentInParent<VRRig>();
-                if (Ray.collider != null && rigTarget != null && !rigTarget.IsLocal())
+                VRRig rigTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
+                if (rigTarget != null && !rigTarget.IsLocal())
                 {
                     if (lastTarget != null && lastTarget != rigTarget)
                     {

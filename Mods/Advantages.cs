@@ -213,7 +213,7 @@ namespace iiMenu.Mods
                 }
 
                 if (!GetGunInput(true)) return;
-                VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                 if (!gunTarget || gunTarget.IsLocal()) return;
                 if (!PhotonNetwork.IsMasterClient) return;
                 gunLocked = true;
@@ -253,7 +253,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         if (PhotonNetwork.IsMasterClient)
@@ -290,7 +290,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         if (PhotonNetwork.IsMasterClient)
@@ -422,7 +422,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         gunLocked = true;
@@ -521,7 +521,7 @@ namespace iiMenu.Mods
                 }
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         if (PhotonNetwork.IsMasterClient)
@@ -630,7 +630,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal() && gunTarget.IsTagged())
                     {
                         if (PhotonNetwork.IsMasterClient)
@@ -790,7 +790,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true) && Time.time > tagGunDelay)
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         tagGunDelay = Time.time + 0.2f;
@@ -1012,7 +1012,7 @@ namespace iiMenu.Mods
                 }
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         if (PhotonNetwork.IsMasterClient)
@@ -1056,7 +1056,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         NetPlayer owner = GetPlayerFromVRRig(gunTarget);
@@ -1131,7 +1131,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         NetPlayer owner = GetPlayerFromVRRig(gunTarget);

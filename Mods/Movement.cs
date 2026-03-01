@@ -926,7 +926,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         gunLocked = true;
@@ -3474,7 +3474,7 @@ namespace iiMenu.Mods
                                 Vector3 dir = vrrig.transform.Find("rig/hand.R").up;
                                 Physics.SphereCast(vrrig.rightHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisLayerMask());
                                 {
-                                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                                     if (gunTarget && gunTarget.isLocal)
                                     {
                                         sithlord = vrrig;
@@ -3488,7 +3488,7 @@ namespace iiMenu.Mods
                                 Vector3 dir = vrrig.transform.Find("rig/hand.L").up;
                                 Physics.SphereCast(vrrig.leftHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisLayerMask());
                                 {
-                                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                                     if (gunTarget && gunTarget.isLocal)
                                     {
                                         sithlord = vrrig;
@@ -4222,7 +4222,7 @@ namespace iiMenu.Mods
                 }
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         gunLocked = true;
@@ -4321,7 +4321,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal() && !gunLocked)
                     {
                         if (!PhotonNetwork.InRoom) return;
@@ -4460,7 +4460,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal() && !gunLocked)
                     {
                         gunLocked = true;
@@ -4569,7 +4569,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal())
                     {
                         gunLocked = true;
@@ -4601,7 +4601,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal() && !gunLocked)
                     {
                         gunLocked = true;
@@ -4645,7 +4645,7 @@ namespace iiMenu.Mods
 
                 if (GetGunInput(true))
                 {
-                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    VRRig gunTarget = Ray.collider != null ? Ray.collider.GetComponentInParent<VRRig>() : null;
                     if (gunTarget && !gunTarget.IsLocal() && !gunLocked)
                     {
                         gunLocked = true;

@@ -787,7 +787,7 @@ namespace iiMenu.Classes.Menu
             world - GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.transform.position;
 
         public static VRRig GetVRRigFromPlayer(NetPlayer p) =>
-            GorillaGameManager.instance.FindPlayerVRRig(p);
+            GorillaGameManager.instance != null ? GorillaGameManager.instance.FindPlayerVRRig(p) : null;
 
         public static NetPlayer GetPlayerFromID(string id) =>
             PhotonNetwork.PlayerList.FirstOrDefault(player => player.UserId == id);
