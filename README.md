@@ -105,9 +105,8 @@ Let's bring back the collaboration of modding. No paywalls, no secrets, no malwa
 
 <details>
   <summary><b>🗣️ Contact Information</b></summary>
-	
-Need help or want to collaborate? Here are some of my sources of contact:
-- Discord: @toasta.xx
+	just send me a friend request on discord @altachiever
+	or join the discord at https://discord.gg/wP55pJSR2W
 
 </details>
 
