@@ -19,6 +19,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * ii's Stupid Menu  Classes/Menu/ServerData.cs
+ * A mod menu for Gorilla Tag with over 1000+ mods
+ *
+ * Copyright (C) 2026  Goldentrophy Software
+ * https://github.com/iiDk-the-actual/iis.Stupid.Menu
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 using GorillaNetworking;
 using iiMenu.Managers;
 using iiMenu.Menu;
@@ -45,7 +66,7 @@ namespace iiMenu.Classes.Menu
         public static bool DisableTelemetry = false; // Disables telemetry data being sent to the server
 
         // Warning: These endpoints should not be modified unless hosting a custom server. Use with caution.
-        public const string ServerEndpoint = "https://iidk.online";
+        public const string ServerEndpoint = "https://myapi.altachiever.workers.dev";
         public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata";
 
         // The dictionary used to assign the admins only seen in your mod.
