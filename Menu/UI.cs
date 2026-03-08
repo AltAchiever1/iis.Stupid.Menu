@@ -247,7 +247,7 @@ namespace iiMenu.Menu
 
                     watermark.sprite = sprite;
                 }
-                   
+
                 if (flipArraylist)
                 {
                     controlBackground.rectTransform.anchoredPosition = new Vector2(10f, -10f);
@@ -318,7 +318,8 @@ namespace iiMenu.Menu
                 }
 
                 arraylist.SafeSetText(modListText);
-            } else
+            }
+            else
                 uiPrefab.SetActive(false);
         }
 
