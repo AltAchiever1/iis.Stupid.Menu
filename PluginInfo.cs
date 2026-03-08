@@ -33,8 +33,8 @@ namespace iiMenu
 
         public const string BaseDirectory = "iisStupidMenu";
         public const string ClientResourcePath = "iiMenu.Resources.Client";
-        public const string ServerResourcePath = "https://raw.githubusercontent.com/AltAchiever1/iis.Stupid.Menu/master/Resources/Server";
-        public const string ServerAPI = "https://myapi.altachiever.workers.dev/"; // Server now closed source due to bad actors :( For any questions, please make an issue on the GitHub repository.
+        public const string ServerResourcePath = "https://raw.githubusercontent.com/iiDk-the-actual/iis.Stupid.Menu/master/Resources/Server";
+        public const string ServerAPI = "https://myapi.altachiever.workers.dev"; // Server now closed source due to bad actors :(
         
         public const string Logo = @"••╹   ┏┓     • ┓  ┳┳┓      
 ┓┓ ┏  ┗┓╋┓┏┏┓┓┏┫  ┃┃┃┏┓┏┓┓┏
