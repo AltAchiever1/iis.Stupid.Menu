@@ -226,7 +226,7 @@ namespace iiMenu.Menu
             {
                 if (PatchHandler.CriticalPatchFailed)
                 {
-                    string message = "A critical patch has failed, and you have been blocked from joining rooms for safety reasons. Please report this as an issue to the GitHub repository."; 
+                    string message = "A critical patch has failed, and you have been blocked from joining rooms for safety reasons. Please report this as an issue to the GitHub repository.";
                     NotificationManager.SendNotification($"<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> {message}", 10000);
                     GorillaComputer.instance.GeneralFailureMessage(message);
                     if (NetworkSystem.Instance.InRoom)
@@ -235,7 +235,7 @@ namespace iiMenu.Menu
                 else
                     NotificationManager.SendNotification($"<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> {PatchHandler.PatchErrors} patch{(PatchHandler.PatchErrors > 1 ? "es" : "")} failed to initialize. Please report this as an issue to the GitHub repository.", 10000);
             }
-                
+
         }
 
         public static void Prefix()
@@ -277,7 +277,7 @@ namespace iiMenu.Menu
 
                 bool arrowKeysPressed = UnityInput.Current.GetKey(KeyCode.UpArrow) || UnityInput.Current.GetKey(KeyCode.DownArrow) || UnityInput.Current.GetKey(KeyCode.LeftArrow) || UnityInput.Current.GetKey(KeyCode.RightArrow);
                 bool leftOverride = UnityInput.Current.GetKey(Settings.pcBindings[Settings.ControllerBinding.LeftOverride]);
-                
+
                 if (arrowKeysPressed)
                 {
                     Vector2 direction = new Vector2((UnityInput.Current.GetKey(KeyCode.RightArrow) ? 1f : 0f) + (UnityInput.Current.GetKey(KeyCode.LeftArrow) ? -1f : 0f), (UnityInput.Current.GetKey(KeyCode.UpArrow) ? 1f : 0f) + (UnityInput.Current.GetKey(KeyCode.DownArrow) ? -1f : 0f));
@@ -395,7 +395,8 @@ namespace iiMenu.Menu
                     lastChecker = shouldOpen;
 
                     buttonCondition = joystickOpen;
-                } else
+                }
+                else
                     joystickButtonSelected = 0;
 
                 if (physicalMenu)
@@ -471,7 +472,7 @@ namespace iiMenu.Menu
                 }
                 else
                     fpsAverageNumber = 1f / Time.unscaledDeltaTime;
-                
+
                 if (Time.time > fpsAvgTime || !fpsCountTimed)
                 {
                     lastDeltaTime = Mathf.Ceil(fpsAverageNumber);
@@ -731,7 +732,8 @@ namespace iiMenu.Menu
                                 LogManager.Log("Attempting rejoin");
                                 NetworkSystem.Instance.ReturnToSinglePlayer();
                                 partyKickReconnecting = true;
-                            } else
+                            }
+                            else
                             {
                                 NotificationManager.SendNotification("<color=grey>[</color><color=green>SUCCESS</color><color=grey>]</color> Successfully " + (waitForPlayerJoin ? "banned" : "kicked") + " " + amountPartying + " party member.");
                                 partyKickReconnecting = false;
@@ -765,13 +767,14 @@ namespace iiMenu.Menu
                                 Sound.StopAllSounds();
                             }
                         }
-                    } else if (RecorderPatch.enabled)
+                    }
+                    else if (RecorderPatch.enabled)
                     {
                         if (!Buttons.GetIndex("Microphone Feedback").enabled)
                             GorillaTagger.Instance.myRecorder.DebugEchoMode = VoiceManager.Get().AudioClips.Any() || VoiceManager.Get().PostProcessors.Any();
 
                     }
-                    
+
                 }
                 catch { }
 
@@ -891,7 +894,7 @@ namespace iiMenu.Menu
                                 {
                                     barkMenuGrabbed = leftGrabbing;
                                     rightHand = rightGrabbing;
-                                    
+
                                     if (reference != null)
                                     {
                                         Destroy(reference);
@@ -912,7 +915,8 @@ namespace iiMenu.Menu
                                 barkMenuOpen = false;
                             }
                         }
-                    } else
+                    }
+                    else
                     {
                         static bool IsBangingPosition(Vector3 position)
                         {
@@ -1053,15 +1057,18 @@ namespace iiMenu.Menu
                     {
                         loadPreferencesTime = Time.time;
 
-                        try {
+                        try
+                        {
                             LogManager.Log("Loading preferences due to load errors");
                             Settings.LoadPreferences();
-                        } catch
+                        }
+                        catch
                         {
                             LogManager.Log("Could not load preferences");
                         }
                     }
-                } catch { }
+                }
+                catch { }
 
                 try
                 {
@@ -1238,7 +1245,8 @@ namespace iiMenu.Menu
 
                         BindStates[bindInput] = bindValue;
                     }
-                } catch { }
+                }
+                catch { }
                 #endregion
 
                 #region Visual Clean Up
@@ -1310,7 +1318,8 @@ namespace iiMenu.Menu
 
                     foreach (string item in toRemoveLabel)
                         Visuals.labelDictionary.Remove(item);
-                } catch { }
+                }
+                catch { }
                 #endregion
 
                 #region Execute Mods
@@ -1432,7 +1441,8 @@ namespace iiMenu.Menu
                         rightTrigger = _rightTrigger;
                         leftJoystickClick = _leftJoystickClick;
                         rightJoystickClick = _rightJoystickClick;
-                    } catch { }
+                    }
+                    catch { }
                 }
                 #endregion
             }
@@ -1663,10 +1673,10 @@ namespace iiMenu.Menu
                                         {
                                             try
                                             {
-                                                List<string> texts = v.aliases == null ? new List<string>() : v.aliases.ToList();
+                                                List<string> texts = v.aliases?.ToList() ?? new List<string>();
                                                 texts.Add(v.overlapText ?? v.buttonText);
 
-                                                if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                                if (texts.Any(buttonText => NoRichtextTags(buttonText).Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
                                                     searchedMods.Add(v);
                                             }
                                             catch { }
@@ -1687,10 +1697,10 @@ namespace iiMenu.Menu
                                                         || (v.detected && !allowDetected))
                                                         continue;
 
-                                                    List<string> texts = v.aliases == null ? new List<string>() : v.aliases.ToList();
+                                                    List<string> texts = v.aliases?.ToList() ?? new List<string>();
                                                     texts.Add(v.overlapText ?? v.buttonText);
 
-                                                    if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                                    if (texts.Any(buttonText => NoRichtextTags(buttonText).Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
                                                         searchedMods.Add(v);
                                                 }
                                                 catch { }
@@ -1819,7 +1829,7 @@ namespace iiMenu.Menu
                     menuBackground.transform.localScale += new Vector3(0f, 0f, 0.1f);
                     menuBackground.transform.localPosition += new Vector3(0f, 0f, -0.05f);
                 }
-                
+
                 buttonObject.transform.localPosition = new Vector3(0.56f, 0f, 0.28f - offset);
                 if (checkMode && buttonIndex > -1)
                 {
@@ -1845,7 +1855,8 @@ namespace iiMenu.Menu
 
                             RenderIncrementalText(false, offset);
                             RenderIncrementalButton(true, offset, buttonIndex, method);
-                        } else
+                        }
+                        else
                         {
                             buttonObject.transform.localScale -= new Vector3(0f, 0.254f, 0f);
                             Destroy(Button);
@@ -1955,13 +1966,13 @@ namespace iiMenu.Menu
                         }
                 }
             }
-            
+
             if (method.rebindKey != null)
             {
                 if (targetButtonText.Contains("</color><color=grey>]</color>"))
                     targetButtonText = targetButtonText.Split("<color=grey>[</color><color=green>")[0] + "<color=grey>[</color><color=green>" + method.rebindKey + "</color><color=grey>]</color>";
             }
-            
+
             if (method.customBind != null)
             {
                 if (targetButtonText.Contains("</color><color=grey>]</color>"))
@@ -2844,7 +2855,7 @@ namespace iiMenu.Menu
                 if (!disableReturnButton && Buttons.CurrentCategoryName != "Main")
                     AddReturnButton(false);
             }
-            
+
             if (enableDebugButton)
                 AddDebugButton();
             else
@@ -2939,10 +2950,10 @@ namespace iiMenu.Menu
                             {
                                 try
                                 {
-                                    List<string> texts = v.aliases == null ? new List<string>() : v.aliases.ToList();
+                                    List<string> texts = v.aliases?.ToList() ?? new List<string>();
                                     texts.Add(v.overlapText ?? v.buttonText);
 
-                                    if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                    if (texts.Any(buttonText => NoRichtextTags(buttonText).Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
                                         searchedMods.Add(v);
                                 }
                                 catch { }
@@ -2963,10 +2974,10 @@ namespace iiMenu.Menu
                                             || (v.detected && !allowDetected))
                                             continue;
 
-                                        List<string> texts = v.aliases == null ? new List<string>() : v.aliases.ToList();
+                                        List<string> texts = v.aliases?.ToList() ?? new List<string>();
                                         texts.Add(v.overlapText ?? v.buttonText);
 
-                                        if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                        if (texts.Any(buttonText => NoRichtextTags(buttonText).Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
                                             searchedMods.Add(v);
                                     }
                                     catch { }
@@ -2984,45 +2995,45 @@ namespace iiMenu.Menu
                         renderButtons = Enumerable.Repeat(disconnectButton, 15).ToArray();
                     }
                     else switch (Buttons.CurrentCategoryName)
-                    {
-                        case "Main":
                         {
-                            List<ButtonInfo> buttons = new List<ButtonInfo>();
-                            foreach (var button in Buttons.buttons[Buttons.CurrentCategoryIndex])
-                            {
-                                if (!skipButtons.Contains(button.buttonText))
-                                    buttons.Add(button);
-                            }
-                            renderButtons = buttons.ToArray();
-                            break;
-                        }
-                        case "Favorite Mods":
-                        {
-                            foreach (var favoriteMod in favorites.Where(favoriteMod => Buttons.GetIndex(favoriteMod) == null).ToList())
-                                favorites.Remove(favoriteMod);
+                            case "Main":
+                                {
+                                    List<ButtonInfo> buttons = new List<ButtonInfo>();
+                                    foreach (var button in Buttons.buttons[Buttons.CurrentCategoryIndex])
+                                    {
+                                        if (!skipButtons.Contains(button.buttonText))
+                                            buttons.Add(button);
+                                    }
+                                    renderButtons = buttons.ToArray();
+                                    break;
+                                }
+                            case "Favorite Mods":
+                                {
+                                    foreach (var favoriteMod in favorites.Where(favoriteMod => Buttons.GetIndex(favoriteMod) == null).ToList())
+                                        favorites.Remove(favoriteMod);
 
-                            renderButtons = StringsToInfos(favorites.ToArray());
-                            break;
-                        }
-                        case "Enabled Mods":
-                        {
-                            List<ButtonInfo> enabledMods = new List<ButtonInfo>();
-                            int categoryIndex = 0;
-                            foreach (ButtonInfo[] buttonList in Buttons.buttons)
-                            {
-                                enabledMods.AddRange(buttonList.Where(v => v.enabled && (!hideSettings || !Buttons.categoryNames[categoryIndex].Contains("Settings")) && (!hideMacros || !Buttons.categoryNames[categoryIndex].Contains("Macro"))));
-                                categoryIndex++;
-                            }
-                            enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
-                            enabledMods.Insert(0, Buttons.GetIndex("Exit Enabled Mods"));
+                                    renderButtons = StringsToInfos(favorites.ToArray());
+                                    break;
+                                }
+                            case "Enabled Mods":
+                                {
+                                    List<ButtonInfo> enabledMods = new List<ButtonInfo>();
+                                    int categoryIndex = 0;
+                                    foreach (ButtonInfo[] buttonList in Buttons.buttons)
+                                    {
+                                        enabledMods.AddRange(buttonList.Where(v => v.enabled && (!hideSettings || !Buttons.categoryNames[categoryIndex].Contains("Settings")) && (!hideMacros || !Buttons.categoryNames[categoryIndex].Contains("Macro"))));
+                                        categoryIndex++;
+                                    }
+                                    enabledMods = enabledMods.OrderBy(v => v.buttonText).ToList();
+                                    enabledMods.Insert(0, Buttons.GetIndex("Exit Enabled Mods"));
 
-                            renderButtons = enabledMods.ToArray();
-                            break;
+                                    renderButtons = enabledMods.ToArray();
+                                    break;
+                                }
+                            default:
+                                renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
+                                break;
                         }
-                        default:
-                            renderButtons = Buttons.buttons[Buttons.CurrentCategoryIndex];
-                            break;
-                    }
 
                     if (Buttons.GetIndex("Alphabetize Menu").enabled || isSearching)
                         renderButtons = StringsToInfos(Alphabetize(InfosToStrings(renderButtons)));
@@ -3149,7 +3160,8 @@ namespace iiMenu.Menu
                                 rotation += new Vector3(0f, 0f, 180f);
                                 menu.transform.rotation = Quaternion.Euler(rotation);
                             }
-                        } else
+                        }
+                        else
                         {
                             menu.transform.position = GorillaTagger.Instance.bodyCollider.transform.TransformPoint(new Vector3(0f, 0f, 0.5f));
                             menu.transform.position = new Vector3(menu.transform.position.x, GorillaTagger.Instance.headCollider.transform.position.y, menu.transform.position.z);
@@ -3159,7 +3171,8 @@ namespace iiMenu.Menu
                             rotModify += new Vector3(-90f, 0f, -90f);
                             menu.transform.rotation = Quaternion.Euler(rotModify);
                         }
-                    } else
+                    }
+                    else
                     {
                         if (rightHand || (bothHands && ControllerInputPoller.instance.rightControllerSecondaryButton))
                         {
@@ -3245,7 +3258,7 @@ namespace iiMenu.Menu
 
                             OnMenuClosed += () => Destroy(pcBackground);
                         }
-                        
+
                         Color realcolor = backgroundColor.GetCurrentColor();
                         pcBackground.GetComponent<Renderer>().material.color = new Color32((byte)(realcolor.r * 50), (byte)(realcolor.g * 50), (byte)(realcolor.b * 50), 255);
                     }
@@ -3276,7 +3289,8 @@ namespace iiMenu.Menu
                         isMouseDown = Mouse.current.leftButton.isPressed;
                     }
                 }
-            } else
+            }
+            else
                 isOnPC = false;
 
             if (physicalMenu)
@@ -3312,8 +3326,9 @@ namespace iiMenu.Menu
             try
             {
                 OnMenuOpened?.Invoke();
-            } catch { }
-            
+            }
+            catch { }
+
             if (dynamicSounds)
                 Play2DAudio(LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Menu/open.ogg", "Audio/Menu/open.ogg"), buttonClickVolume / 10f);
 
@@ -3355,8 +3370,9 @@ namespace iiMenu.Menu
             try
             {
                 OnMenuClosed?.Invoke();
-            } catch { }
-            
+            }
+            catch { }
+
             GetObject("Shoulder Camera").transform.Find("CM vcam1").gameObject.SetActive(true);
             if (dynamicSounds)
                 Play2DAudio(LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Menu/close.ogg", "Audio/Menu/close.ogg"), buttonClickVolume / 10f);
@@ -3420,8 +3436,10 @@ namespace iiMenu.Menu
 
                             Destroy(gameObject, 5f);
                         }
-                    } catch { }
-                } else
+                    }
+                    catch { }
+                }
+                else
                 {
                     try
                     {
@@ -4111,7 +4129,7 @@ namespace iiMenu.Menu
         public static List<PromptData> prompts = new List<PromptData>();
         public static PromptData CurrentPrompt
         {
-            get 
+            get
             {
                 return prompts.Count > 0 ? prompts[0] : null;
             }
@@ -4231,7 +4249,8 @@ namespace iiMenu.Menu
                     for (int x = 0; x < 128; x++)
                         pixels[y * 128 + x] = rowColor;
                 }
-            } else
+            }
+            else
             {
                 for (int i = 0; i < 128; i++)
                 {
@@ -4268,7 +4287,8 @@ namespace iiMenu.Menu
                 PhotonNetwork.QuickResends = int.MaxValue;
 
                 PhotonNetwork.SendAllOutgoingCommands();
-            } catch { LogManager.Log("RPC protection failed, are you in a lobby?"); }
+            }
+            catch { LogManager.Log("RPC protection failed, are you in a lobby?"); }
         }
 
         /// <summary>
@@ -4379,7 +4399,7 @@ namespace iiMenu.Menu
 
             if (PointerRenderer.material.shader.name != "GUI/Text Shader")
                 PointerRenderer.material.shader = Shader.Find("GUI/Text Shader");
-            
+
             PointerRenderer.material.color = gunLocked || GetGunInput(true) ? buttonColors[1].GetCurrentColor() : buttonColors[0].GetCurrentColor();
 
             if (disableGunPointer)
@@ -4615,7 +4635,7 @@ namespace iiMenu.Menu
         {
             get
             {
-                if (!GorillaParent.instance.vrrigs.Contains(_giveGunTarget))
+                if (!VRRigCache.ActiveRigs.Contains(_giveGunTarget))
                     _giveGunTarget = null;
 
                 return _giveGunTarget;
@@ -4645,7 +4665,7 @@ namespace iiMenu.Menu
         /// <param name="transform">The transform used to determine the gun's orientation.</param>
         /// <returns>A Vector3 representing the selected gun direction.</returns>
         public static Vector3 GetGunDirection(Transform transform) =>
-            new[] { transform.forward, - transform.up, transform == GorillaTagger.Instance.rightHandTransform ? ControllerUtilities.GetTrueRightHand().forward : ControllerUtilities.GetTrueLeftHand().forward, GorillaTagger.Instance.headCollider.transform.forward } [GunDirection];
+            new[] { transform.forward, -transform.up, transform == GorillaTagger.Instance.rightHandTransform ? ControllerUtilities.GetTrueRightHand().forward : ControllerUtilities.GetTrueLeftHand().forward, GorillaTagger.Instance.headCollider.transform.forward }[GunDirection];
 
         /// <summary>
         /// Generates a text-to-speech audio clip from the provided text using various TTS services and invokes a
@@ -5037,7 +5057,7 @@ namespace iiMenu.Menu
         {
             if (snowballDict == null)
             {
-                if (!CosmeticsV2Spawner_Dirty.completed)
+                if (!CosmeticsV2Spawner_Dirty.isPrepared)
                     return null;
 
                 if (!GorillaComputer.instance.isConnectedToMaster)
@@ -5845,12 +5865,13 @@ namespace iiMenu.Menu
             {
                 if (!GorillaComputer.instance.friendJoinCollider.playerIDsCurrentlyTouching.Contains(PhotonNetwork
                         .LocalPlayer.UserId) &&
-                    !CosmeticWardrobeProximityDetector.IsUserNearWardrobe(PhotonNetwork.LocalPlayer.UserId)) return;
+                    !CosmeticWardrobeProximityDetector.IsUserNearWardrobe(PhotonNetwork.LocalPlayer.actorNumber)) return;
                 GorillaTagger.Instance.myVRRig.SendRPC("RPC_InitializeNoobMaterial", RpcTarget.All, VRRig.LocalRig.playerColor.r, VRRig.LocalRig.playerColor.g, VRRig.LocalRig.playerColor.b);
                 RPCProtection();
             }
             catch { }
         }
+
 
         public static void ChangeColor(Color color, object target = null)
         {
@@ -5877,7 +5898,8 @@ namespace iiMenu.Menu
                 }
 
                 RPCProtection();
-            } catch { }
+            }
+            catch { }
         }
 
         public static void PlayButtonSound(string buttonText = null, bool overlapHand = false, bool leftOverlap = false)
@@ -5953,7 +5975,8 @@ namespace iiMenu.Menu
                     audioSource.volume = buttonClickVolume / 10f;
                     audioSource.PlayOneShot(LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Menu/Buttons/{namesToIds[buttonClickIndex]}.ogg", $"Audio/Menu/Buttons/{namesToIds[buttonClickIndex]}.ogg"));
                 }
-            } catch { }
+            }
+            catch { }
             rightHand = archiveRightHand;
         }
 
@@ -5962,7 +5985,7 @@ namespace iiMenu.Menu
         {
             noInvisLayerMask ??= ~(
                 1 << LayerMask.NameToLayer("TransparentFX") |
-                1 << LayerMask.NameToLayer("Ignore Raycast") | 
+                1 << LayerMask.NameToLayer("Ignore Raycast") |
                 1 << LayerMask.NameToLayer("Zone") |
                 1 << LayerMask.NameToLayer("Gorilla Trigger") |
                 1 << LayerMask.NameToLayer("Gorilla Boundary") |
@@ -5991,209 +6014,224 @@ namespace iiMenu.Menu
             switch (buttonText)
             {
                 case "PreviousPage":
-                {
-                    if (dynamicAnimations)
-                        lastClickedName = "PreviousPage";
-
-                    pageNumber--;
-                    if (pageNumber < 0)
-                        pageNumber = LastPage;
-                    break;
-                }
-                case "NextPage":
-                {
-                    if (dynamicAnimations)
-                        lastClickedName = "NextPage";
-
-                    pageNumber++;
-                    pageNumber %= LastPage + 1;
-                    break;
-                }
-                default:
-                {
-                    ButtonInfo target = Buttons.GetIndex(buttonText);
-                    if (target != null)
                     {
-                        string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
-                        if (target.overlapText != null && target.overlapText.Contains(newIndicator))
-                        {
-                            target.overlapText = target.overlapText.Replace(newIndicator, "");
-                            if (target.overlapText == target.buttonText)
-                                target.overlapText = target.buttonText;
-                        }
+                        if (dynamicAnimations)
+                            lastClickedName = "PreviousPage";
 
-                        if (target.label)
-                            return;
+                        pageNumber--;
+                        if (pageNumber < 0)
+                            pageNumber = LastPage;
+                        break;
+                    }
+                case "NextPage":
+                    {
+                        if (dynamicAnimations)
+                            lastClickedName = "NextPage";
 
-                        switch (fromMenu)
+                        pageNumber++;
+                        pageNumber %= LastPage + 1;
+                        break;
+                    }
+                default:
+                    {
+                        ButtonInfo target = Buttons.GetIndex(buttonText);
+                        if (target != null)
                         {
-                            case true when !ignoreForce && menuButtonIndex != 2 && ((leftGrab && !joystickMenu) || (joystickMenu && rightJoystick.y > 0.5f && leftTrigger > 0.5f)):
+                            string newIndicator = " <color=grey>[</color><color=green>New</color><color=grey>]</color>";
+                            if (target.overlapText != null && target.overlapText.Contains(newIndicator))
                             {
-                                if (IsBinding)
-                                {
-                                    bool AlreadyBinded = false;
-                                    string BindedTo = "";
-                                    foreach (var Bind in ModBindings.Where(Bind => Bind.Value.Contains(target.buttonText)))
-                                    {
-                                        AlreadyBinded = true;
-                                        BindedTo = Bind.Key;
-                                        break;
-                                    }
+                                target.overlapText = target.overlapText.Replace(newIndicator, "");
+                                if (target.overlapText == target.buttonText)
+                                    target.overlapText = target.buttonText;
+                            }
 
-                                    if (AlreadyBinded)
-                                    {
-                                        target.customBind = null;
-                                        ModBindings[BindedTo].Remove(target.buttonText);
-                                        VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
+                            if (target.label)
+                                return;
 
-                                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully unbinded mod.");
-                                    } else
+                            switch (fromMenu)
+                            {
+                                case true when !ignoreForce && menuButtonIndex != 2 && ((leftGrab && !joystickMenu) || (joystickMenu && rightJoystick.y > 0.5f && leftTrigger > 0.5f)):
                                     {
-                                        target.customBind = BindInput;
-                                        ModBindings[BindInput].Add(target.buttonText);
-                                        VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
-
-                                        NotificationManager.SendNotification($"<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully binded mod to <color=green>{BindInput}</color>.");
-                                    }
-                                }
-                                else
-                                {
-                                    if (IsRebinding)
-                                    {
-                                        if (target.rebindKey != null)
+                                        if (IsBinding)
                                         {
-                                            target.rebindKey = null;
-                                            VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
-                                            NotificationManager.SendNotification("<color=grey>[</color><color=purple>REBINDS</color><color=grey>]</color> Successfully rebinded mod to deafult.");
-                                        }
-                                        else
-                                        {
-                                            target.rebindKey = BindInput;
-                                            VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
-                                            NotificationManager.SendNotification("<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully rebinded mod to {BindInput}.");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (target.buttonText != "Exit Favorite Mods")
-                                        {
-                                            if (favorites.Contains(target.buttonText))
+                                            bool AlreadyBinded = false;
+                                            string BindedTo = "";
+                                            foreach (var Bind in ModBindings.Where(Bind => Bind.Value.Contains(target.buttonText)))
                                             {
-                                                favorites.Remove(target.buttonText);
+                                                AlreadyBinded = true;
+                                                BindedTo = Bind.Key;
+                                                break;
+                                            }
+
+                                            if (AlreadyBinded)
+                                            {
+                                                target.customBind = null;
+                                                ModBindings[BindedTo].Remove(target.buttonText);
                                                 VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
 
-                                                NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                                                NotificationManager.SendNotification("<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully unbinded mod.");
                                             }
                                             else
                                             {
-                                                favorites.Add(target.buttonText);
+                                                target.customBind = BindInput;
+                                                ModBindings[BindInput].Add(target.buttonText);
                                                 VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
 
-                                                NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                                                NotificationManager.SendNotification($"<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully binded mod to <color=green>{BindInput}</color>.");
                                             }
                                         }
-                                    }
-                                }
-
-                                break;
-                            }
-                            case true when !ignoreForce && menuButtonIndex != 3 && leftTrigger > 0.5f && !joystickMenu:
-                            {
-                                if (!quickActions.Contains(target.buttonText))
-                                {
-                                    quickActions.Add(target.buttonText);
-                                    VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
-
-                                    NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
-                                } else
-                                {
-                                    quickActions.Remove(target.buttonText);
-                                    VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
-                                    
-                                    NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
-                                }
-
-                                break;
-                            }
-                            case true when target.detected && !allowDetected:
-                            {
-                                NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> This mod is detected and requires permission to run.");
-                                break;
-                            }
-                            default:
-                            {
-                                if (target.isTogglable)
-                                {
-                                    target.enabled = !target.enabled;
-                                    if (target.enabled)
-                                    {
-                                        if (fromMenu)
-                                            NotificationManager.SendNotification($"<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> {target.toolTip}");
-                                        
-                                        if (target.enableMethod != null)
-                                            try { target.enableMethod.Invoke(); } catch (Exception exc) { LogManager.LogError(
-                                                $"Error with mod enableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}"); }
-                                    }
-                                    else
-                                    {
-                                        if (fromMenu)
-                                            NotificationManager.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
-                                        
-                                        if (target.disableMethod != null)
-                                            try { target.disableMethod.Invoke(); } catch (Exception exc) { LogManager.LogError(
-                                                $"Error with mod disableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}"); }
-                                    }
-
-                                    int enabledButtons = Buttons.buttons
-                                        .SelectMany(list => list).Count(button => button.enabled);
-
-                                    if (enabledButtons >= 50)
-                                        AchievementManager.UnlockAchievement(new AchievementManager.Achievement
+                                        else
                                         {
-                                            name = "Dedicated",
-                                            description = "Enable 50 mods at the same time.",
-                                            icon = "Images/Achievements/award.png"
-                                        });
+                                            if (IsRebinding)
+                                            {
+                                                if (target.rebindKey != null)
+                                                {
+                                                    target.rebindKey = null;
+                                                    VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
+                                                    NotificationManager.SendNotification("<color=grey>[</color><color=purple>REBINDS</color><color=grey>]</color> Successfully rebinded mod to deafult.");
+                                                }
+                                                else
+                                                {
+                                                    target.rebindKey = BindInput;
+                                                    VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
+                                                    NotificationManager.SendNotification("<color=grey>[</color><color=purple>BINDS</color><color=grey>]</color> Successfully rebinded mod to {BindInput}.");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (target.buttonText != "Exit Favorite Mods")
+                                                {
+                                                    if (favorites.Contains(target.buttonText))
+                                                    {
+                                                        favorites.Remove(target.buttonText);
+                                                        VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
 
-                                    if (enabledButtons >= 100)
-                                        AchievementManager.UnlockAchievement(new AchievementManager.Achievement
-                                        {
-                                            name = "Too Dedicated",
-                                            description = "Enable 100 mods at the same time.",
-                                            icon = "Images/Achievements/red-award.png"
-                                        });
-                                }
-                                else
-                                {
-                                    if (dynamicAnimations)
-                                        lastClickedName = target.buttonText;
+                                                        NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Removed from favorites.");
+                                                    }
+                                                    else
+                                                    {
+                                                        favorites.Add(target.buttonText);
+                                                        VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
 
-                                    if (fromMenu)
-                                        NotificationManager.SendNotification("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+                                                        NotificationManager.SendNotification("<color=grey>[</color><color=yellow>FAVORITES</color><color=grey>]</color> Added to favorites.");
+                                                    }
+                                                }
+                                            }
+                                        }
 
-                                    if (target.method != null)
-                                        try { target.method.Invoke(); } catch (Exception exc) { LogManager.LogError(
-                                            $"Error with mod {target.buttonText} at {exc.StackTrace}: {exc.Message}"); }
-                                }
-                                try
-                                {
-                                    if (fromMenu && !ignoreForce && ServerData.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId) && rightJoystickClick && PhotonNetwork.InRoom)
-                                    {
-                                        Console.ExecuteCommand("forceenable", ReceiverGroup.Others, target.buttonText, target.enabled);
-                                        NotificationManager.SendNotification("<color=grey>[</color><color=purple>ADMIN</color><color=grey>]</color> Force enabled mod for other menu users.");
-                                        VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
+                                        break;
                                     }
-                                } catch { }
+                                case true when !ignoreForce && menuButtonIndex != 3 && leftTrigger > 0.5f && !joystickMenu:
+                                    {
+                                        if (!quickActions.Contains(target.buttonText))
+                                        {
+                                            quickActions.Add(target.buttonText);
+                                            VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
 
-                                break;
+                                            NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Added quick action button.");
+                                        }
+                                        else
+                                        {
+                                            quickActions.Remove(target.buttonText);
+                                            VRRig.LocalRig.PlayHandTapLocal(48, rightHand, 0.4f);
+
+                                            NotificationManager.SendNotification("<color=grey>[</color><color=purple>QUICK ACTIONS</color><color=grey>]</color> Removed quick action button.");
+                                        }
+
+                                        break;
+                                    }
+                                case true when target.detected && !allowDetected:
+                                    {
+                                        NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> This mod is detected and requires permission to run.");
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        if (target.isTogglable)
+                                        {
+                                            target.enabled = !target.enabled;
+                                            if (target.enabled)
+                                            {
+                                                if (fromMenu)
+                                                    NotificationManager.SendNotification($"<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> {target.toolTip}");
+
+                                                if (target.enableMethod != null)
+                                                    try { target.enableMethod.Invoke(); }
+                                                    catch (Exception exc)
+                                                    {
+                                                        LogManager.LogError(
+                                                        $"Error with mod enableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                                    }
+                                            }
+                                            else
+                                            {
+                                                if (fromMenu)
+                                                    NotificationManager.SendNotification($"<color=grey>[</color><color=red>DISABLE</color><color=grey>]</color> {target.toolTip}");
+
+                                                if (target.disableMethod != null)
+                                                    try { target.disableMethod.Invoke(); }
+                                                    catch (Exception exc)
+                                                    {
+                                                        LogManager.LogError(
+                                                        $"Error with mod disableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                                    }
+                                            }
+
+                                            int enabledButtons = Buttons.buttons
+                                                .SelectMany(list => list).Count(button => button.enabled);
+
+                                            if (enabledButtons >= 50)
+                                                AchievementManager.UnlockAchievement(new AchievementManager.Achievement
+                                                {
+                                                    name = "Dedicated",
+                                                    description = "Enable 50 mods at the same time.",
+                                                    icon = "Images/Achievements/award.png"
+                                                });
+
+                                            if (enabledButtons >= 100)
+                                                AchievementManager.UnlockAchievement(new AchievementManager.Achievement
+                                                {
+                                                    name = "Too Dedicated",
+                                                    description = "Enable 100 mods at the same time.",
+                                                    icon = "Images/Achievements/red-award.png"
+                                                });
+                                        }
+                                        else
+                                        {
+                                            if (dynamicAnimations)
+                                                lastClickedName = target.buttonText;
+
+                                            if (fromMenu)
+                                                NotificationManager.SendNotification("<color=grey>[</color><color=green>ENABLE</color><color=grey>]</color> " + target.toolTip);
+
+                                            if (target.method != null)
+                                                try { target.method.Invoke(); }
+                                                catch (Exception exc)
+                                                {
+                                                    LogManager.LogError(
+                                                    $"Error with mod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                                }
+                                        }
+                                        try
+                                        {
+                                            if (fromMenu && !ignoreForce && ServerData.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId) && rightJoystickClick && PhotonNetwork.InRoom)
+                                            {
+                                                Console.ExecuteCommand("forceenable", ReceiverGroup.Others, target.buttonText, target.enabled);
+                                                NotificationManager.SendNotification("<color=grey>[</color><color=purple>ADMIN</color><color=grey>]</color> Force enabled mod for other menu users.");
+                                                VRRig.LocalRig.PlayHandTapLocal(50, rightHand, 0.4f);
+                                            }
+                                        }
+                                        catch { }
+
+                                        break;
+                                    }
                             }
                         }
-                    }
-                    else
-                        LogManager.LogError($"{buttonText} does not exist");
+                        else
+                            LogManager.LogError($"{buttonText} does not exist");
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             if (!clickGUI)
@@ -6221,7 +6259,7 @@ namespace iiMenu.Menu
         /// <param name="buttonText">The text label of the button to be toggled. This is used to identify the target button.</param>
         /// <param name="increment">true to apply the incremental action; false to apply the decremental action.</param>
         public static void ToggleIncremental(string buttonText, bool increment, bool reload = true)
-        { 
+        {
             ButtonInfo target = Buttons.GetIndex(buttonText);
             if (target != null)
             {
@@ -6356,12 +6394,12 @@ namespace iiMenu.Menu
                                     }
                                 else
                                     if (target.enableMethod != null)
-                                    try { target.enableMethod.Invoke(); }
-                                    catch (Exception exc)
-                                    {
-                                        LogManager.LogError(
-                                        $"Error with mod enableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
-                                    }
+                                        try { target.enableMethod.Invoke(); }
+                                        catch (Exception exc)
+                                        {
+                                            LogManager.LogError(
+                                            $"Error with mod enableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                        }
                             }
                             else
                             {
@@ -6381,12 +6419,12 @@ namespace iiMenu.Menu
                                     }
                                 else
                                     if (target.disableMethod != null)
-                                    try { target.disableMethod.Invoke(); }
-                                    catch (Exception exc)
-                                    {
-                                        LogManager.LogError(
-                                        $"Error with mod disableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
-                                    }
+                                        try { target.disableMethod.Invoke(); }
+                                        catch (Exception exc)
+                                        {
+                                            LogManager.LogError(
+                                            $"Error with mod disableMethod {target.buttonText} at {exc.StackTrace}: {exc.Message}");
+                                        }
                             }
 
                             break;
@@ -6513,8 +6551,8 @@ namespace iiMenu.Menu
             Utopium ??= LoadAsset<TMP_FontAsset>("Utopium");
             DejaVuSans ??= LoadAsset<TMP_FontAsset>("DejaVuSans");
 
-            foreach (TMP_FontAsset font in new[] { AgencyFB, FreeSans, Candara, ComicSans, 
-                CascadiaMono, Anton, Minecraft, MSGothic, OpenDyslexic, SimSun, Taiko, 
+            foreach (TMP_FontAsset font in new[] { AgencyFB, FreeSans, Candara, ComicSans,
+                CascadiaMono, Anton, Minecraft, MSGothic, OpenDyslexic, SimSun, Taiko,
                 Terminal, Utopium, DejaVuSans })
                 font.fallbackFontAssetTable.Add(LiberationSans);
         }
@@ -6643,10 +6681,10 @@ jgs \_   _/ |Oo\
                         {
                             try
                             {
-                                List<string> texts = v.aliases == null ? new List<string>() : v.aliases.ToList();
+                                List<string> texts = v.aliases?.ToList() ?? new List<string>();
                                 texts.Add(v.overlapText ?? v.buttonText);
 
-                                if (texts.Any(buttonText => buttonText.ClearTags().Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
+                                if (texts.Any(buttonText => NoRichtextTags(buttonText).Replace(" ", "").ToLower().Contains(keyboardInput.Replace(" ", "").ToLower())))
                                     searchedMods.Add(v);
                             }
                             catch { }
@@ -7007,7 +7045,7 @@ jgs \_   _/ |Oo\
         public static readonly List<string> skipButtons = new List<string> { };
         public static bool translate;
 
-        public static string serverLink = "https://discord.gg/iidk";
+        public static string serverLink = "https://discord.gg/gPHmWnN4u8";
 
         public static int arrowType;
         public static readonly string[][] arrowTypes = {
@@ -7092,7 +7130,7 @@ jgs \_   _/ |Oo\
         public static bool redactText;
 
         public static string inputTextColor = "green";
-        
+
         public static bool annoyingMode; // Build with this enabled for a surprise
         public static readonly string[] facts = {
             "The honeybee is the only insect that produces food eaten by humans.",
